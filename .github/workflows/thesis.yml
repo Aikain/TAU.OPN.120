@@ -1,0 +1,27 @@
+name: Build LaTeX
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'thesis/src/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v2
+        with:
+          root_file: main.tex
+          working_directory: thesis/src
+
+      - name: Upload pdf
+        uses: actions/upload-artifact@v3
+        with:
+          name: PDF
+          path: thesis/src/main.pdf
