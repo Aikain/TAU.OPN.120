@@ -116,7 +116,7 @@
 \RequirePackage{setspace}
 \RequirePackage{parskip}
 
-\spacing{1.213}
+\setstretch{1.213}
 \setlength{\headheight}{14.5pt}
 
 \newlength\chapterspace
