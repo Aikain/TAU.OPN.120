@@ -1,0 +1,83 @@
+\chapter{Miten eri kielimallit toimivat?}%
+\label{ch:vertailu}
+
+\begin{itemize}
+  \item Mitkä ovat kriteerit
+  \begin{itemize}
+    \item Kuinka tärkeitä mitkäkin ominaisuudet, mitä painotetaan yms.
+    \item Esim. kyky suomenkielelle
+    \item Hinta?
+  \end{itemize}
+  \item Joku vertailutaulukko?
+  \item  Käytännössä kaikki seuraavista on transformer arkkitehtuurin päälle rakennettuja etukäteen koulutettuja.
+  \begin{itemize}
+    \item GPT
+    \begin{itemize}
+      \item Generative pre-trained transformer
+      \item OpenAI:n kehittämä
+    \end{itemize}
+    \item BERT
+    \begin{itemize}
+      \item Bidirectional Encoder Representations from Transformers
+      \item Googlen kehittämä
+      \item Encoder only (https://huggingface.co/learn/nlp-course/chapter1/5)
+    \end{itemize}
+    \item LLaMA
+    \begin{itemize}
+      \item Large Language Model Meta AI
+      \item Metan kehittämä
+      \item https://ai.meta.com/llama/
+    \end{itemize}
+    \item Bloom
+    \begin{itemize}
+      \item BigScience Large Open-science Open-access Multilingual Language Model
+      \item Useamman tahon kehittämä
+      \item Modified from Megatron-LM GPT2
+      \item Decored only
+    \end{itemize}
+    \item Gemini
+    \begin{itemize}
+      \item LaMDA -> PaLM -> Gemini
+      \item Googlen
+      \item Decored only
+      \item Vertautuu GPT-4 (V):hen
+      \item https://ai.google.dev/
+      \item Ei käytettävissä EU alueella
+    \end{itemize}
+    \item Chinchilla:
+    \begin{itemize}
+      \item Googlen
+      \item Ei vielä julkisesti käytettävissä
+    \end{itemize}
+    \item FinBERT
+    \item Finnish GPT-3
+  \end{itemize}
+  \item https://huggingface.co/AaltoSpeech
+  \begin{itemize}
+    \item CombFinnish-AED-CRDNN / Automatic Speech Recognition / Jonkin sortin puheentunnistusta?
+  \end{itemize}
+  \item https://huggingface.co/Helsinki-NLP
+  \begin{itemize}
+    \item simple-finnish-gpt3-xl / Text Generation / finetuned versio TurkuNLP/gpt3-finnish-xl:sta
+  \end{itemize}
+  \item https://huggingface.co/TurkuNLP
+  \begin{itemize}
+    \item bert-base-finnish-cased-v1, vertailujen mukaan parempi kuin Googlen multilingual (https://github.com/google-research/bert/blob/master/multilingual.md)
+    \item löytyy myös uncased versio
+    \item löytyy large variant
+    \item toxicity versio, joka ilmeisesti tunnistaa 6 eri tyyppistä toxicityä
+    \item QA versio
+    \item bloom-finnish-176b / Text Generation / rakennettu bloom:in päälle sisältämään suomenkielisiä datasettejä
+    \item gpt3-finnish-X / Text Generation / useampi erikokoinen GPT-3-malli, "puhtaita kielimalleja" eli ei ole hienosäädetty mm. vuoropuheluun tai kysymyksiin
+    \item sbert-cased-finnish-paraphrase / Sentence Similarity / tunnistaa virkkeiden samankaltaisuutta
+  \end{itemize}
+  \item https://huggingface.co/Finnish-NLP
+  \item https://huggingface.co/Kansallisarkisto
+  \begin{itemize}
+    \item finbert-ner / Token Classification / tunnistaa nimiä yms. tekstistä, hienosäädetty versio TurkuNLP/bert-base-finnish-cased-v1:sta
+  \end{itemize}
+  \item https://huggingface.co/tasks
+  \item https://huggingface.co/models?pipeline\_tag=text-generation\&language=fi\&sort=trending
+  \item https://huggingface.co/Finnish-NLP/llama-7b-finnish
+  \item https://huggingface.co/TurkuNLP/gpt3-finnish-3B
+\end{itemize}
