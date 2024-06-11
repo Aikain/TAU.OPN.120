@@ -40,20 +40,6 @@
       \item Modified from Megatron-LM GPT2
       \item Decored only
     \end{itemize}
-    \item Gemini
-    \begin{itemize}
-      \item LaMDA -> PaLM -> Gemini
-      \item Googlen
-      \item Decored only
-      \item Vertautuu GPT-4 (V):hen
-      \item https://ai.google.dev/
-      \item Ei käytettävissä EU alueella
-    \end{itemize}
-    \item Chinchilla:
-    \begin{itemize}
-      \item Googlen
-      \item Ei vielä julkisesti käytettävissä
-    \end{itemize}
     \item FinBERT
     \item Finnish GPT-3
   \end{itemize}
@@ -86,3 +72,52 @@
   \item https://huggingface.co/Finnish-NLP/llama-7b-finnish
   \item https://huggingface.co/TurkuNLP/gpt3-finnish-3B
 \end{itemize}
+
+\section{Google Gemini}
+
+Gemini on Googlen julkaisema kielimalliperhe, jonka on seuraaja PaLM 2:lle
+\parencite{googleKeynote2023}. Googlella on myös Gemini-niminen ChatBot, joka
+tunnettiin aiemmin nimellä Bard, ennen kuin Google nimesi sen uudelleen
+Geminiksi \parencite{geminiUpdates}. Geministä on useita eri malleja, jotka on
+tarkoitettu eri käyttötilanteisiin. Näitä malleja ovat Ultra, Pro, Flash ja
+Nano. \parencite{googleDeepmindGemini} Näistä Ultra on tarkoitettu
+monimutkaisimpiin tehtäviin, Pro optimoitu kustannusten ja viiveen kannalta ja
+Nano puolestaan laitteissa pyöritettäväksi
+\parencite{googleDeepmindGeminiv1report}. Flash puolestaan on entistä
+kustannustehokkaampi ja nopeampi kuin Pro \parencite{googleKeynote2024}.
+Malleista on useita eri versioita, jotka on välillä nimetty samoin kuin
+edelliset versiot \parencite{googleDeepmindGeminiv1_5report}. Kehitys on ollut
+erittäin nopeaa ja versiot vanhenevat nopeasti uusien tullessa käytettäviksi.
+
+% TODO: lyhyesti teoriaa, mihin kielimallit pohjautuvat?
+
+Gemini ei ole saatavilla Googlen AI Studion kautta ilman maksullista tilausta
+Suomessa \parencite{googleAiAvailableRegions}. Geminiä on kuitenkin mahdollista
+käyttää Vertex AI -alustan kautta.
+
+Gemini 1.0 Pron hinta syötteenä annetuille kuville on \$0.0025 / kuva, videolle
+\$0.002 / sekunti, tekstille \$0.000125 / 1000 merkkiä ja ulostulolle
+\$0.000375 / 1000 merkkiä. Gemini 1.5 Pron hinnat ovat noin puolet syötteelle
+eli kuville \$0.001315 / kuva, videoille \$0.001315 / sekunti, tekstille
+\$0.00125 / 1000 merkkiä ja äänelle \$0.000125 / sekunti. Ulostulo puolestaan
+on 10-kertaa kalliimpi eli \$0.00375 / 1000 merkkiä. Gemini 1.5 Pron hinnat
+kaksinkertaistuvat mikäli käytössä oleva konteksti on yli 128 000. Gemini
+1.5 Flashin hinnat ovat 10\% siitä mitä Gemini 1.5 Pron hinnat ovat.
+\parencite{vertexAiGenerativeAiPricing} Hintoja on havainnollistettu taulukossa
+\ref{tab:vertex-ai-generative-ai-pricing}.
+
+\begin{table}[H]
+  \centering
+  \rowcolors{2}{gray!25}{white}
+  \caption{Esimerkki hintoja eri syötteille ja ulostuloille}
+  \label{tab:vertex-ai-generative-ai-pricing}
+  \begin{tabular}{lccc}
+    \textbf{Esimerkki} & \textbf{Gemini 1.0 Pro} & \textbf{Gemini 1.5 Pro} & \textbf{Gemini 1.5 Flash} \\
+    \hline
+    \Gape[0pt][2pt]{\makecell[l]{Syöte: 500 merkkiä\\Ulostulo: 1000 merkkiä}} & 0,041 snt & 0,408 snt & 0,041 snt \\
+    \Gape[0pt][2pt]{\makecell[l]{Syöte: 1 kuva\\Ulostulo: 1000 merkkiä}} & 0,27 snt & 0,47 snt & 0,047 snt \\
+    \Gape[0pt][2pt]{\makecell[l]{Syöte: 10 minuutin video\\Ulostulo: 1000 merkkiä}} & 1,123 € & 0,739 € & 0,074 € \\
+    \Gape[0pt][2pt]{\makecell[l]{Syöte: 30 minuuttia ääntä\\Ulostulo: 1000 merkkiä}} & - & 0.213 € & 0.021 € \\
+    \hline
+  \end{tabular}
+\end{table}
