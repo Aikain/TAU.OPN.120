@@ -3,12 +3,53 @@
 
 Tähän tulee tietoa toteutuksesta.
 
-\section{Sovellus}
+\section{Vertex AI: Gemini \& PaLM 2}
 
-Mitä varten / Mihin sovellus tehdään?
+Vertex AI -alustan käyttöön on tarjolla kirjastoja useille eri
+ohjelmointikielille \parencite{vertexAiGenerativeAiQuickstart}. Sovelluksen
+backend on toteutettu javalla ja pakettimanagerina on maven, joten Vertex AI:n
+javalle tekemän kirjasto saadaan käyttöön lisäämällä pom.xml-tiedostoon
+esimerkin \ref{lst:vertexai-pom.xml} mukaisesti.
 
-\section{Kielimallin käyttäminen sovelluksessa}
+\begin{lstlisting}[
+    basicstyle=\small,
+    caption={google-cloud-vertexai riippuvuus pom.xml tiedostoon},
+    label={lst:vertexai-pom.xml},
+    language=xml,
+]
+<dependency>
+    <groupId>com.google.cloud</groupId>
+    <artifactId>google-cloud-vertexai</artifactId>
+    <version>1.2.0</version>
+</dependency>
+\end{lstlisting}
 
-Tähän selitystä, miten kielimallia on käytetty.
+Kevään 2024 aikana riippuvuuteen on tullut useita versioita, joista osa on
+tuonut rikkovia muutoksia \parencite{mavenGoogleVertexAIAPI}. Kirjastoon
+liittyvät esimerkit ovat tehty versiolle 1.2.0.
 
-% https://cloud.google.com/vertex-ai/generative-ai/docs/start/quickstarts/quickstart-multimodal#gemini-beginner-samples-java
+Sovellukseen on toteutettu backendin puolelle interface, jonka toteuttamalla
+serviceä pystytään käyttämään helposti UI:n kanssa. Toteuttamalla interfacen
+saadaan luotua tarina halutulla mallilla sekä jatkettua tarinaa. Esimerkissä
+\ref{lst:gemini-service} on kyseisille metodeille tehdyt toteutukset, joissa
+luodaan VertexAI:n kirjastosta löytyvät ChatSession ja laitetaan se talteen
+niin tarinaa voidaan jatkaa myöhemmin.
+
+\lstinputlisting[
+    basicstyle=\small,
+    caption={Backendiin toteutetun Gemini servicen tarinan luonti- ja jatko-metodien toteutukset},
+    label={lst:gemini-service},
+    language=java,
+]{code/GeminiService.java}
+
+PaLM 2:lle saadaan puolestaan toteutettua esimerkin \ref{lst:palm2-service}
+mukaisesti. PaLM 2:lle ei ole tarjolla vastaavaa ChatSessionia, kuin Geminille,
+joten on sille toteutettu vain tarinan luonti, muttei mahdollisuutta jatkaa
+tarinaa.
+
+\lstinputlisting[
+    basicstyle=\small,
+    caption={Backendiin toteutetun PaLM 2 servicen tarinan luontimetodin toteutukset},
+    label={lst:palm2-service},
+    language=java,
+]{code/PaLM2Service.java}
