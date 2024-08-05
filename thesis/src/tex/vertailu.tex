@@ -139,3 +139,62 @@ Sittemmin muun muassa PaLM API on deprekoitu ja kehittäjiä on suositeltu
 siirtymään Geminin pariin \parencite{googlePaLMAPIDeprecated}. Myös hinnoittelu
 ja maininta Bison Text ja Chat -malleista on poistettu, vaikka malleja on vielä
 mahdollista käyttää 2024 alkukesästä Vertex AI:n kirjastojen avulla.
+
+\section{Claude}
+
+Tekoälyn turvallisuuteen ja tutkimukseen keskittyvä yritys, Anthropic, on
+luonut oman tekoälynsä, Clauden. Claude on pyritty rakentamaan
+tietoturvalliseksi, luotettavaksi ja varmaksi. \parencite{anthropicCompany}
+\parencite{anthropicClaude} Näihin on pyritty esimerkiksi tutkimuksien avulla,
+jotka ovat keskittyneet muun muassa suojauksen murtamisen (jailbreaking)
+estämiseen. \parencite{anthropicResearch}
+
+Nykyisin Claudesta on kolme eri mallia versiolla 3.0. Näitä malleja ovat
+Sonnet, Opus ja Haiku. Pääasiallisesti Opus on isoin ja paras malli kun Haiku
+puolestaan keskittyy nopeuteen ja on huomattavasti pienempi. Sonnet puolestaan
+jää näiden kahden välimaastoon. Sonnetista on kuitenkin julkaistu uudempi
+versio 3.5, joka on saatu Opus:ta paremmaksi kuitenkin pitäen kulut samana kuin
+3.0 versiossa. Tilannetta on havainnollistettu kuvassa
+\ref{fig:3-5-sonnet-curve}. \parencite{anthropicAPIDocsModels}
+
+\begin{figure}[H]
+  \includegraphics[width=\textwidth]{figures/3-5-sonnet-curve.png}
+  \caption{Anthropic API dokumentaatiossa oleva havannollistava kuva mallien eroista 05.08.2024}
+  \label{fig:3-5-sonnet-curve}
+\end{figure}
+
+Claudea on mahdollista kokeilla web-käyttöliittymän kautta rekisteröitymisen
+jälkeen ilmaisena muutamia kyselyitä päivässä \parencite{claudeChat}. Tarjolla
+on myös Anthropic API, joka vaatii aktiivisen tilauksen. APIa voi käyttää
+tarjolla olevien kirjastojen avulla tai vaihtoehtoisesti suorittaa itse kutsuja
+API-dokumentaation mukaisesti. Claude on saatavilla myös AWS Bedrockin sekä
+Vertex AI:n kautta. \parencite{anthropicAPIDocs}
+
+Clauden hinnoittelu vaihtelee hiukan sivuston mukaan. Claude.ai:n Pro-tilauksen
+hinnoiksi ilmoitetaan \$20 tai 18€ + ALV ja Team-tilaukselle \$25/\$30 tai
+23€/28€ + ALV. \parencite{anthropicPricing} \parencite{claudePricing} Anthropic
+API:n hinnat on esitetty taulukossa \ref{tab:anthropic-api-pricing}
+
+\begin{table}[H]
+  \centering
+  \rowcolors{2}{gray!25}{white}
+  \caption{Anthropic APIn hinnat}
+  \label{tab:anthropic-api-pricing}
+  \begin{tabular}{lccc}
+    \textbf{Malli} & \textbf{Syöttö} & \textbf{Ulostulo} \\
+    \hline
+    Claude 3.5 Sonnect &    \$3 / MTok &   \$15 / MTok \\
+    Claude 3 Opus      &   \$15 / MTok &   \$75 / MTok \\
+    Claude 3 Haiku     & \$0.25 / MTok & \$1.25 / MTok \\
+    \hline
+  \end{tabular}
+\end{table}
+
+Clauden ilmainen tilaus sisältää vain Claude 3.5 Sonnetin käyttämisen web-
+käyttöliittymän sekä sovellusten kautta. Pro-tilaus lisää mahdollisuuden
+käyttää Opus- ja Haiku-malleja sekä joitain QoL-lisäyksiä ja suurempaa
+prioriteettia käyttäjälle. Team-tilaus on lähinnä tiimin hallinnan ja maksun
+kannalta oleellisia lisätoiminnallisuuksia. Pro-tilaus lisää viisin kertaisen
+käyttörajan verrattuna ilmaiseen ja Team-tilaus sitäkin suuremman.
+\parencite{anthropicPricing} \parencite{claudePricing} Selviä käyttörajoja ei
+ole saatavilla.

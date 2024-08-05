@@ -53,3 +53,56 @@ tarinaa.
     label={lst:palm2-service},
     language=java,
 ]{code/PaLM2Service.java}
+
+\section{Claude 3.5 Sonnet}
+
+Anthropic tarjoaa vain python kirjastoja Clauden käyttöön, joten sovellukseen
+integrointi tehdään kutsuen suoraan saatavilla olevaa rajapintaa. Yksi
+yksinkertainen vaihtoehto on käyttää openfeign:iä, joka saadaan käyttöön
+lisäämällä `pom.xml`:n riippuvuuksiin \ref{lst:openfeign-pom.xml} mukainen
+riippuvuus.
+
+\begin{lstlisting}[
+    basicstyle=\small,
+    caption={spring-cloud-starter-openfeign riippuvuus pom.xml tiedostoon},
+    label={lst:openfeign-pom.xml},
+    language=xml,
+]
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-openfeign</artifactId>
+    <version>4.1.3</version>
+</dependency>
+\end{lstlisting}
+
+Openfeign riippuvuuden lisäämisen jälkeen saadaan luotua interface
+\ref{lst:claude-api-client}, johon toteutetaan tarpeelliset päätepisteet.
+
+\lstinputlisting[
+    basicstyle=\small,
+    caption={Claude rajapinnan tarvittavien päätepisteiden toteuttaminen interfacena},
+    label={lst:claude-api-client},
+    language=java,
+]{code/ClaudeApiClient.java}
+
+Rajapinnan käyttäminen vaatii, että versio ja API avain on määritelty otsikko
+-tietueisiin \parencite{anthropicAPIDocsVersions}
+\parencite{anthropicAPIDocsGettingStarted}. Tämä saadaan toteutettua
+mukautetulla RequestInterceptor toteutuksella esimerkin \ref{lst:claude-config}
+mukaisesti, jossa API avain on luettu ympristömuuttujasta.
+
+\lstinputlisting[
+    basicstyle=\small,
+    caption={Mukautettu RequestInterceptor toteutus},
+    label={lst:claude-config},
+    language=java,
+]{code/ClaudeConfig.java}
+
+Tämän jälkeen saadaan testattua esimerkin \ref{lst:claude-service} mukaisesti.
+
+\lstinputlisting[
+    basicstyle=\small,
+    caption={Käynnistyksen yhteydessä lähetetään esimerkki viesti},
+    label={lst:claude-service},
+    language=java,
+]{code/ClaudeService.java}
