@@ -27,12 +27,6 @@
       \item Googlen kehittämä
       \item Encoder only (https://huggingface.co/learn/nlp-course/chapter1/5)
     \end{itemize}
-    \item LLaMA
-    \begin{itemize}
-      \item Large Language Model Meta AI
-      \item Metan kehittämä
-      \item https://ai.meta.com/llama/
-    \end{itemize}
     \item Bloom
     \begin{itemize}
       \item BigScience Large Open-science Open-access Multilingual Language Model
@@ -139,6 +133,62 @@ Sittemmin muun muassa PaLM API on deprekoitu ja kehittäjiä on suositeltu
 siirtymään Geminin pariin \parencite{googlePaLMAPIDeprecated}. Myös hinnoittelu
 ja maininta Bison Text ja Chat -malleista on poistettu, vaikka malleja on vielä
 mahdollista käyttää 2024 alkukesästä Vertex AI:n kirjastojen avulla.
+
+\section{Llama}
+
+Llama on Meta AI:n 2023 helmikuussa esittelemä kokoelma kielimalleja
+\parencite{llama1}. Llama 2 julkaistiin samana vuonna heinäkuussa
+\parencite{llama2}, Llama 3 huhtikuussa 2024 \parencite{llama3} ja 3.1
+heinäkuussa 2024 \parencite{llama31}. Uusimmasta versiosta 3.1 on olemassa
+kolme erikokoista mallia, jotka on tarkoitettu kukin itselleen sopivaan
+tarkoitukseen, 8B toimimaan kevyenä ja nopeana, 70B hinta/laatu suhteeltaan
+parhaalta ja 405B toimimaan kaikista parhaiten vaihtelevissa tilanteissa
+\parencite{llama}. Näiden lisäksi on julkaistu useita versioita muita malleja,
+jotka on suunniteltu tiettyyn käyttötarkoitukseen kuten Llama Guard, joka
+pyrkii luokittelemaan sisältöä ja määrittelemään kehotteiden ja vastausten
+turvallisuutta \parencite{llamaGuard3} sekä Code Llama, joka puolestaan on
+suunniteltu täydentämään koodia \parencite{llamaOtherModels}.
+
+Useat kolmannet osapuolet tarjoavat rajapinnan, jonka kautta mallia on
+mahdollista käyttää ja hinnoittelu pohjautuu tokenien määrään. Halvin
+ilmoitettu hinnat ja tarjoajat näkyvät taulukossa
+\ref{tab:third-party-llama-prices}. Keskimääräiset hinnat esitellyille
+kolmansille osapuolille ovat taulukossa \ref{tab:third-party-llama-prices}.
+Kolmansia osapuolia ovat AWS, Azure, Databricks, Fireworks.ai, IBM, Octo.ai,
+Snowflake ja Togerher.AI. \parencite{llama} Taulukko ei kata kuin vain osan
+mahdollisista kolmannen osapuolen palveluntarjoajista sillä muun muassa
+Vertex AI:n kautta on saatavilla myös rajapinta Llama 3.1:lle
+\parencite{vertexAiModelGardenLlama3}.
+
+\begin{table}[H]
+  \centering
+  \rowcolors{2}{gray!25}{white}
+  \caption{Halvimmat esitellyistä kolmannen osapuolen tarjoamista rajapintojen hinnoista mallia kohden \parencite{llama}}
+  \label{tab:third-party-llama-prices}
+  \begin{tabular}{llcc}
+    \textbf{Malli} & \textbf{Palveluntarjoaja} & \textbf{Syöttö} & \textbf{Ulostulo} \\
+    \hline
+    Llama 3.1 8B   & Octo.ai      & \$0.15 / MTok & \$0.15 / MTok \\
+    Llama 3.1 70B  & Togerher.AI  & \$0.88 / MTok & \$0.88 / MTok \\
+    Llama 3.1 405B & Fireworks.ai & \$3.00 / MTok & \$3.00 / MTok \\
+    \hline
+  \end{tabular}
+\end{table}
+
+\begin{table}[H]
+  \centering
+  \rowcolors{2}{gray!25}{white}
+  \caption{Esiteltyjen kolmansien osapuolien tarjoamien rajapintojen hintojen keskiarvot mallia kohden \parencite{llama}}
+  \label{tab:third-party-llama-prices}
+  \begin{tabular}{lcc}
+    \textbf{Malli} & \textbf{Syöttö} & \textbf{Ulostulo} \\
+    \hline
+    Llama 3.1 8B   & \$0.33 / MTok &  \$0.42 / MTok \\
+    Llama 3.1 70B  & \$1.81 / MTok &  \$2.27 / MTok \\
+    Llama 3.1 405B & \$5.83 / MTok & \$11.88 / MTok \\
+    \hline
+  \end{tabular}
+\end{table}
 
 \section{Claude}
 

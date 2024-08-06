@@ -54,6 +54,20 @@ tarinaa.
     language=java,
 ]{code/PaLM2Service.java}
 
+\section{Llama 3.1}
+
+Vertex AI:n Model Gardenissa on ollut 23.07.2024 alkaen tarjolla Llama 3.1:sta
+API Service, joka mahdollistaa Llama 3.1:n käyttämisen vastaavasta kuin
+Geminin. Tämän ansiosta mallia ei tarvitse itse pystyttää, jolle laskutus olisi
+tuntipohjainen vaan laskutus tapahtuu käytettyjen tokenien mukaan.
+\parencite{vertexAiModelGardenLlama3}
+
+Vertex AI:n SDK tukee valmiiksi useita eri modeleita, myös muita kuin Geminin
+eri variaatioita, joten toteutus voi olla käytännössä täysin sama kuin aiemmin
+esiltelty \ref{lst:gemini-service}-toteutus Geminille. Luomalla oman servicen
+saadaan kuitenkin mukautettua sisällössä annettava ohje sekä parametrit
+sopivammaksi Llama 3.1-mallille.
+
 \section{Claude 3.5 Sonnet}
 
 Anthropic tarjoaa vain python kirjastoja Clauden käyttöön, joten sovellukseen
