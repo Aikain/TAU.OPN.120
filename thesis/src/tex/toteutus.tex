@@ -30,29 +30,15 @@ liittyvät esimerkit ovat tehty versiolle 1.2.0.
 
 Sovellukseen on toteutettu backendin puolelle interface, jonka toteuttamalla
 serviceä pystytään käyttämään helposti UI:n kanssa. Toteuttamalla interfacen
-saadaan luotua tarina halutulla mallilla sekä jatkettua tarinaa. Esimerkissä
-\ref{lst:gemini-service} on kyseisille metodeille tehdyt toteutukset, joissa
+saadaan luotua tarina halutulla mallilla sekä jatkettua tarinaa. Liitteessä
+\ref{ch:gemini-service} on kyseisille metodeille tehdyt toteutukset, joissa
 luodaan VertexAI:n kirjastosta löytyvät ChatSession ja laitetaan se talteen
 niin tarinaa voidaan jatkaa myöhemmin.
 
-\lstinputlisting[
-    basicstyle=\small,
-    caption={Backendiin toteutetun Gemini servicen tarinan luonti- ja jatko-metodien toteutukset},
-    label={lst:gemini-service},
-    language=java,
-]{code/GeminiService.java}
-
-PaLM 2:lle saadaan puolestaan toteutettua esimerkin \ref{lst:palm2-service}
+PaLM 2:lle saadaan puolestaan toteutettua liitteen \ref{ch:palm2-service}
 mukaisesti. PaLM 2:lle ei ole tarjolla vastaavaa ChatSessionia, kuin Geminille,
 joten on sille toteutettu vain tarinan luonti, muttei mahdollisuutta jatkaa
 tarinaa.
-
-\lstinputlisting[
-    basicstyle=\small,
-    caption={Backendiin toteutetun PaLM 2 servicen tarinan luontimetodin toteutukset},
-    label={lst:palm2-service},
-    language=java,
-]{code/PaLM2Service.java}
 
 \section{Llama 3.1}
 
@@ -64,9 +50,9 @@ tuntipohjainen vaan laskutus tapahtuu käytettyjen tokenien mukaan.
 
 Vertex AI:n SDK tukee valmiiksi useita eri modeleita, myös muita kuin Geminin
 eri variaatioita, joten toteutus voi olla käytännössä täysin sama kuin aiemmin
-esiltelty \ref{lst:gemini-service}-toteutus Geminille. Luomalla oman servicen
-saadaan kuitenkin mukautettua sisällössä annettava ohje sekä parametrit
-sopivammaksi Llama 3.1-mallille.
+esiltelty toteutus Geminille liitteessä \ref{ch:gemini-service}. Luomalla oman
+servicen saadaan kuitenkin mukautettua sisällössä annettava ohje sekä
+parametrit sopivammaksi Llama 3.1-mallille.
 
 \section{Claude 3.5 Sonnet}
 
@@ -89,34 +75,13 @@ riippuvuus.
 </dependency>
 \end{lstlisting}
 
-Openfeign riippuvuuden lisäämisen jälkeen saadaan luotua interface
-\ref{lst:claude-api-client}, johon toteutetaan tarpeelliset päätepisteet.
-
-\lstinputlisting[
-    basicstyle=\small,
-    caption={Claude rajapinnan tarvittavien päätepisteiden toteuttaminen interfacena},
-    label={lst:claude-api-client},
-    language=java,
-]{code/ClaudeApiClient.java}
-
-Rajapinnan käyttäminen vaatii, että versio ja API avain on määritelty otsikko
--tietueisiin \parencite{anthropicAPIDocsVersions}
-\parencite{anthropicAPIDocsGettingStarted}. Tämä saadaan toteutettua
-mukautetulla RequestInterceptor toteutuksella esimerkin \ref{lst:claude-config}
-mukaisesti, jossa API avain on luettu ympristömuuttujasta.
-
-\lstinputlisting[
-    basicstyle=\small,
-    caption={Mukautettu RequestInterceptor toteutus},
-    label={lst:claude-config},
-    language=java,
-]{code/ClaudeConfig.java}
-
-Tämän jälkeen saadaan testattua esimerkin \ref{lst:claude-service} mukaisesti.
-
-\lstinputlisting[
-    basicstyle=\small,
-    caption={Käynnistyksen yhteydessä lähetetään esimerkki viesti},
-    label={lst:claude-service},
-    language=java,
-]{code/ClaudeService.java}
+Openfeign riippuvuuden lisäämisen jälkeen saadaan rajapinta käyttöön liitteen
+\ref{ch:claude-example} esimerkkien mukaisesti. Esimerkissä luodaan ensin
+interface, jossa on tarvittavat päätepisteet. Rajapinnan käyttäminen vaatii,
+että versio ja API avain on määritelty otsikko -tietueisiin
+\parencite{anthropicAPIDocsVersions}
+\parencite{anthropicAPIDocsGettingStarted}. Tämä on toteutettu esimerkissä
+näkyvällä ClaudeConfig-luokan toteutuksella, jossa annetaan
+RequestInterceptor:lle haluttu API avain ympristömuuttujasta. Interfacen
+määrityksen sekä vaadittujen otsikkotietojen asettamisen jälkeen voidaan API:a
+kutsua esimerkissä olevan ClaudeService-luokan toteutuksen mukaisesti.
