@@ -1,0 +1,179 @@
+\chapter{Kielimallit}%
+\label{ch:kielimallit}
+
+Nykyisin tekoälystä kuulee jatkuvasti puhuttavan jossain muodossa. Tekoälyn
+merkityksestä tulevaisuudella kuulee jatkuvasti erilaisia arvioita ja
+intensiivinen ja nopea kehitys alalla avaa jatkuvasti yhä uusia
+mahdollisuuksia. Se, että mikä on tekoäly, ei kuitenkaan ole täsmällisesti
+määritelty ja yksi mahdollinen määritys voisi olla Työ- ja elinkeinoministeriön
+julkaisussa käytettävä määritelmä "Tekoäly tarkoittaa laitteita, ohjelmistoja
+ja järjestelmiä, jotka kykenevät oppimaan ja tekemään päätöksiä lähes samalla
+tavalla kuin ihmiset. Tekoälyn avulla koneet, laitteet, ohjelmat, järjestelmät
+ja palvelut voivat toimia tehtävän ja tilanteen mukaisesti järkevällä tavalla"
+\parencite{valtioneuvostoSuomenTekoalyaika}.
+
+Yhtenä keinoa toteuttaa tekoälyä voidaan käyttää kielimalleja. Kielimallit on
+yleensä koulutettu ymmärtämään ja tuottamaan luonnollista kieltä. Tänä päivänä
+paljon esillä olevat kielimallit ovat niin sanottuja suuria kielimalleja,
+joiden koulutus on pohjautunut merkittävän suureen aineistoon. Ainoiston avulla
+kielimallia voidaan opettaa ennustamaan, mitä sanoja tai lauseita aineistoin
+mukaan annettaisiin vastauksena.
+
+\section{Suuret kielimallit}
+
+Suuret kielimallit tulivat tunnetuiksi suurelle osalle OpenAI:n marraskuussa
+2022 julkaiseman ChatGPT-palvelun myötä tunnetuiksi
+\parencite{alma9911564814005973}. Monille voikin tämän myötä jäädä kuva, että
+kielimalleilta voi kysyä jotain ja ne tuottavat tekstiä vastauksena. Tätä monet
+niistä tekevätkin, mutta tää päivänä käyttötarkoituksia on keksitty useita.
+Perinteisen tekstin tuottamisen lisäksi kielimalleja käytetään mm. kuvan,
+äänen ja videon tuottamiseen. Kielimalleja on yhdistelty ja ne voivatkin
+ymmärtää useita eri syötteitä ja tuottaa tuloksia sen mukaan.
+
+TODO: Mitä niillä ei voi tehdä? (strawberry esimerkki?)
+
+\subsection{Tekstistä kuvaksi}
+
+TODO: Imagen 3 + DALL-E 3
+
+\subsection{Tekstistä videoksi}
+
+Helmikuussa 2024 OpenAi julkaisi Twitteriin useita tviittejä, jossa esiteltiin
+lyhyitä videoita, jotka oli tuotettu antamalle Soralle, uudelle tekstistä
+kuvaksi -mallille, lyhyehkö syöte siitä, mitä videossa halutaan tapahtuvan
+\parencite{twitter1758192957386342435}. Ideana ei tuossa vaiheessa enää ollut
+uutta, että toteutettaisiin videota tekstisyötteestä, mutta Soran tulokset
+näyttivät, että se on todellakin mahdollista käytännössä eikä vain ideatasolla.
+
+Soran kehityksen tautalla on ollut inspiraation ottaminen suurien kielimallien
+toiminnasta. Suuret kielimallit on koulutettu internetin-laajuisella määrällä
+tietoa ja LLM-paradigman menestys pohjautuukin tokeneihin. Vastaavasti Soralle
+on kehitetty visuaalisia patcheja, joita on jo aiemmin nähty toimivan
+visuaalisten toteutusten kanssa hyvin. Kuten suuret kielimallitkin, on Sora
+tansformer-malli. Kuitenkin erona se, että Sora on nimenomaan diffuusio
+transformer -malli. \parencite{openAISoraReport}
+
+Soran kouluttamisessa on käytetty saatavilla olevaa dataa alkuperäisessä koossa
+ilman leikkaamista vakiokokoisiksi. Tämä on yksi selvistä eroista verrattuna
+muihin vastaaviin malleihin. Sen myötä on saatu useita etuja, kuten videoiten
+tuottaminen eri kokoisina ja sisällön sijoittaminen paremmin näkyviin.
+\parencite{openAISoraReport}
+
+Kyseessä on tekstistä videoksi -malli, joten mallin on pelkän videon
+tuottamisen lisäksi ymmärrettävä myös tekstiä. Tähän onkin Soran tapauksessa
+käytetty OpenAI:n kehittämää tekniikkaa, jota DALL-E 3 käyttää. Myös GPT:n
+avulla tekstisyötettä saadaan kuvailevammaksi ja mahdollistamaan sen myötä
+parempien videoiden luontia. \parencite{openAISoraReport}
+
+\section{Kielimallien vertailu}
+
+Kielimallien määrän kasvaessa jatkuvasti on luonnollista, että kielimallit
+kilpailevat siitä, mikä on paras kielimalli. Monien kielimallien julkaisuden
+yhteydessä julkaistussa raportissa suurin osa sisällöstä onkin nimeen vertailua
+ja statistiikkaa siitä miten kielimalli suoriutuu verrattuna muihin.
+Raporteissa näkyvän vertailun voi jakaa kolmeen kategoriaan: kielimallien
+vertailua aiempiin versioihin, kielimallien vertailua toisiin kielimalleihin
+suorituskyvyn tai muun vastaavan mahdollisimman yksiselitteisen numerollisen
+arvon avulla ja kielimallien vertailua erinäisten testien avulla, joilla
+pyritään arvioimaan kielimallin kysyä mahdollisimman neutraalisti.
+
+Kielimallien vertailuissa aiempiin malleihin Geminin kohdalla on toteutettu
+useita eri suorituskykytestejä ja laskettu kuinka monessa testissä uudempi
+versio on onnistunut paremmin ja sen myötä laskettu ns. voittosuhde. Näissä
+suorituskykytestien määrä on vaihdellut ääniihin liittvien suorituskykytestien
+viidestä aina tekstien 24 testiin ja keskeisten ominaisuuksien 50 testiin.
+Määrät vaihtelevat myös riippuen minkä mallien välillä vertailua on tehty.
+Helmikuun ja toukokuun mallien välisiä eroja on myös tarkemmin eroteltu
+koostamalla kymmenkunta eri suorituskykytestiä ja testien antamia pisteitä
+verrattu toisiinsa. \parencite{googleDeepmindGeminiv1_5report}
+
+Geminin kohdalla on myös laskettu tehokkuutta mittaamalla sitä, minkä verran
+kuluu keskimäärin aikaa yksittäiseen merkin tuottamiseen vastauksessa. Testissä
+on annettu syötteitä englanniksi, japaniksi, kiinaksi ja ranskaksi. Mittaukset
+on tehty käyttämällä Vertex AI:n ja OpenAI:n tarjoamia rajapintoja vertailteville
+malleille. \parencite{googleDeepmindGeminiv1_5report} Tällä testillä on saatu
+näkyviin niin sanottua raakaa dataa suorituskyvystä, mutta ottamatta kantaa
+tuloksen varsiseen laatuun ja siten mallin suoriutumiseen. Vastaavia testejä
+näkyykin huomattavasti vähemmän sillä ne eivät välttämättä yksinään kerra
+malleista mitään.
+
+Yksi Gemini 1.5:n merkittävimmistä asioista vaikuttaisi olevan Googlen
+esityksen \parencite{googleKeynote2024} perusteella mahdollisuus merkittävästi
+suurempaan kontekstiin. Tätä korostuu myös mallissa tehdyssä raportissa
+\parencite{googleDeepmindGeminiv1_5report}, jossa vertailu keskittyy paljon
+toimivuuteen suuremmilla konteksteilla. Monessa tapauskessa muilla malleilla ei
+ole edes mahdollisuutta kyseisen kokoiseen kontekstiin, joten vertailut
+keskittyvätkin pitkälti näyttämään miten mallien suoriutuminen kestää
+kontekstin kasvamisen myötä.
+
+Kun Gemini 1:n raportissa \parencite{googleDeepmindGeminiv1report} vertailtiin
+muihin malleihin, on vertailu Gemini 1.5:n
+\parencite{googleDeepmindGeminiv1report} tapauksessa Geminin eri versioiden
+välillä. Geminin ollessa kykenevä useisiin eri asioihin, on myös
+suorituskykytestejä usealla eri osa-alueella, kuten tekstin kohdalla
+kyvykkyys matematiikassa, tieteessä ja päättelyssä, monikielisyydessä,
+sekä koodauksessa. Visuaalisuuteen liittyen puolestaan multimodaaliessa
+päättelyssä, kaavioiden ja dokumenttien käsittelyssä, kuvien luonnollisuuteen
+sek videoiden ymmärtämiseen. Äänten kanssa puolestaan puheen tunnistamiseen ja
+kääntämiseen.
+
+Clauden uusimpien mallien, Claude 3.5 Sonnet ja Claude 3.5 Haiku kanssa on
+esille tuotu erityisesti tiettyjen suorituskykytestien tuloksia. Näissä
+testeissä on vertailtu tuloksia Clauden versioiden sekä GPT:n ja Geminin
+vastaavien mallien välillä. \parencite{anthropicClaudeSonnetAndHaiku35}
+\parencite{anthropicClaudeSonnet} \parencite{anthropicClaudeHaiku} Tuloksien
+ymmärtäminen näistä voi olla selkeämpää verrattuna mm. Geminin raportteihin
+\parencite{googleDeepmindGeminiv1report}
+\parencite{googleDeepmindGeminiv1_5report}, mutta on vertailu on jätetty vain
+yksittäisten suorituskykytestien tulosten varaan.
+
+Suorituskykytestejä on eri kielimallien raportonneissa
+\parencite{anthropicClaudeSonnetAndHaiku35} \parencite{openAI2023GPT4}
+\parencite{openAIGPT4o} \parencite{googleDeepmindGeminiv1_5report} käytetty
+lukuisia, mutta eniten esille tulevat MMMU, GPQA, MATH, HumanEval, MGSM ja
+DROP, jotka ovat esitelty jokaisen tutkitun kielimallien suorituskyvyn
+raportoinnissa. Näiden lisäksi on useita monet suorityskykytestit esiintyvät
+useille eri malleilla. MMMU on suorituskykytesti, joka on suunniteltu
+multimodaalisten mallien arviointiin massiivisiin, monialaisiin tehtäviin,
+jotka vaativat korkeakoulutasoista tuntemusta ja päättelykykyä
+\parencite{benchmarkMMMU}. GPQA on puolestaan kooste 448:sta haastavasta
+monivalinta kysymyksestä biologian, fysiikan ja kemian alalla, johon tohtorin
+tutkintoa tekevät saavat kaksi kolmasosaa oikein \parencite{benchmarkGPQA}.
+Matemaattista ongelmanratkaisua mittaamaan on tehty MATH suorituskykyteksti,
+jossa on 12 500 hasstavaa kilpamatematiikan ongelmaa, jotka sisältävät
+kattavan vaihettaisin ratkaisun, jotta kielimallien kykyä johdatteluun ja
+selittävään vastaukseen voidaan myös parantaa \parencite{benchmarkMATH}.
+HumanEval \parencite{benchmarkHumanEval} on arviointoisarja, joka sisältää
+164 käsinkirjoitettuja ohjelmointi ongelmaa. MSGM suorituskykytesti
+pohjautuu 250 peruskoulutason matematiikan ongelmaan \parencite{benchmarkMSGM}.
+DROP puolestaan on 96 000 kysymystä sisältävä testi englanninkielen
+luetunymmärtämiselle, jotka pyrkii tuomaan haastetta sijoittelemalla
+tarvittava tieto useisiin kohteisiin, joista on kyettävä yhdistelemään
+lopullinen vastaus.
+
+TODO: Missä kielimallit pärjäävät? Missä ne eivät pärjää?
+
+TODO: Mitä eri luvut tarkoittavat? (mitä tarkoittaa jos koulutettu X määrällä dataa yms.)
+
+\section{Historia \& tulevaisuus}
+
+Tekoälyn historia alkaa 1950-luvun tienoilta, jolloin tänä päivänä tuntemamme
+tietotekniikka oli vasta ihan alullaan. Ensimmäiset tekoälynratkaisut
+suorittivat hyvin rajoitettuja tehtäviä, kuten ratkaisivat yksinkertaisia
+matemaattisia laskutoimituksia. Vuonna 1956 järjestetyssä Dartmouth-
+konferenssissa luotuun ehdotus, joka määäritteli perustavoitteet tekoälylle.
+\parencite{alma9911564814005973}
+
+1980-luvulla neuroverkot ja syväoppiminen avasivat uudenlaista potentiaalia
+tekoälyille kun niiden nähtiin mahdollistavan muukin ratkaisu kuin vain
+ohjelmistokehittäjän ennalta määrittämät tehtävät. Neuroverkoilla pyritään
+matkikmaan ihmisten aivoja kun puolestaan syväoppimisella tuotiin useita
+kerroksia, joissa jokainen kerros oppi datasta yhä monimutkaisempia piirteitä.
+\parencite{alma9911564814005973}
+
+Lähempänä nykypäivää käytettävissä olevan datan määrä on mahdollistanut sen
+ettei tekoäly vain tekisi ihmisen määrittelemiä tehtäviä vaan kykenisi johonkin
+oikeasti luovaan, kuten taiteeseen ja kirjoittamiseen.
+\parencite{alma9911564814005973}
+
+TODO: tulevaisuuden arvioita?
