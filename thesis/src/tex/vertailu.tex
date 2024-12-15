@@ -73,11 +73,122 @@ Malleista on useita eri versioita, jotka on välillä nimetty samoin kuin
 edelliset versiot \parencite{googleDeepmindGeminiv1_5report}. Kehitys on ollut
 erittäin nopeaa ja versiot vanhenevat nopeasti uusien tullessa käytettäviksi.
 
-% TODO: lyhyesti teoriaa, mihin kielimallit pohjautuvat?
+\subsection{Käyttö}
 
 Gemini ei ole saatavilla Googlen AI Studion kautta ilman maksullista tilausta
 Suomessa \parencite{googleAiAvailableRegions}. Geminiä on kuitenkin mahdollista
 käyttää Vertex AI -alustan kautta.
+
+Vertex AI -alustan käyttöön on tarjolla kirjastoja useille eri
+ohjelmointikielille \parencite{vertexAiGenerativeAiQuickstart}. Luvussa
+\ref{ch:sovellus} esitellyn sovelluksen backend on toteutettu javalla ja
+pakettimanagerina on maven, joten Vertex AI:n javalle tekemän kirjasto saadaan
+käyttöön lisäämällä pom.xml-tiedostoon esimerkin \ref{lst:vertexai-pom.xml}
+mukaisesti.
+
+\begin{lstlisting}[
+    basicstyle=\small,
+    caption={google-cloud-vertexai riippuvuus pom.xml tiedostoon},
+    label={lst:vertexai-pom.xml},
+    language=xml,
+]
+<dependency>
+    <groupId>com.google.cloud</groupId>
+    <artifactId>google-cloud-vertexai</artifactId>
+    <version>1.2.0</version>
+</dependency>
+\end{lstlisting}
+
+Kevään 2024 aikana riippuvuuteen on tullut useita versioita, joista osa on
+tuonut rikkovia muutoksia \parencite{mavenGoogleVertexAIAPI}. Kirjastoon
+liittyvät koodit tässä työssä on tehty versiolle 1.2.0.
+
+VertexAI:n kirjaston käyttäminen pohjautuu VertexAI-luokasta luotavaan
+ilmiintymään, jota eri mallit käyttävät. Kyseinen ilmiintymä saadaan luotua
+luomalla kohdan \ref{lst:AIConfig.java} mukaisesti VertexAI-bean, jonka myötä
+ilmiintymää saadaan käytettyä Spring Frameworkin avulla helposti usealla eri
+paikalla ilman, että konfiguraatio tarvitsee sotkea varsinaiseen toteutukseen
+\parencite{baeldungSpringBean}.
+
+\begin{lstlisting}[
+    basicstyle=\small,
+    caption={VertexAI konfiguraatio},
+    label={lst:AIConfig.java},
+    language=java,
+]
+// Merkitän luokka konfiguraatioksi, jotta Spring Framework saa
+// käytetyä luokassa määriteltyjä asioita
+@Configuration
+public class AIConfig {
+
+    // Luetaan ympäristömuuttujista VertexAI:n tarvitsema projekti
+    // tunniste
+    @Value("${VERTEX_AI_PROJECT_ID}")
+    private String VERTEX_AI_PROJECT_ID;
+
+    // Luetaan ympäristömuuttujista VertexAI:n tarvitsema rajapinnan
+    // sijainti tieto
+    @Value("${VERTEX_AI_LOCATION}")
+    private String VERTEX_AI_LOCATION;
+
+    // Luodaan VertexAI-bean ympäristömuuttujista luetuilla tiedoilla
+    @Bean
+    public VertexAI vertexAI() {
+        return new VertexAI(VERTEX_AI_PROJECT_ID, VERTEX_AI_LOCATION);
+    }
+}
+\end{lstlisting}
+
+Konfiguraation jälkeen voidaan toteuttaa varsinaisen Servicen, jossa
+Kielimallia käytetään. Esimerkki tällaisesta Servicestä on esitelty
+kohdassa \ref{lst:GeminiService.java}.
+
+\begin{lstlisting}[
+    basicstyle=\small,
+    caption={Esimerkki toteutus siitä, miten Geminiä voisi käyttää},
+    label={lst:GeminiService.java},
+    language=java,
+]
+// Merkitään luokka Serviceksi Spring Frameworkille
+@Service
+@RequiredArgsConstructor
+public class GeminiService {
+
+    private final VertexAI vertexAI;
+
+    // Luodaan kielimallille konfiguraatio
+    private GenerationConfig createGenerationConfig() {
+        return GenerationConfig.newBuilder()
+            .setMaxOutputTokens(2000)
+            .build();
+    }
+
+    public void example() {
+        // Luodaan ilmiintymä mallista
+        GenerativeModel model =
+            new GenerativeModel("gemini-1.0-pro", vertexAI);
+
+        // Luodaan mallista Chat-istunto, jotta mallinan kanssa
+        // voidaan jatkaa keskustelua
+        ChatSession chatSession = model.startChat();
+
+        // Annetaan istunnolle konfiguraatiot
+        chatSession.withGenerationConfig(createGenerationConfig());
+
+        // Lähetetään kielimallin kanssa luotuun chat-istuntoon
+        // viesti "Kerro vitsi"
+        GenerateContentResponse response =
+            chatSession.sendMessage("Kerro vitsi");
+
+        // Tulostetaan kielimallin vastus
+        System.out.println(response
+            .getCandidates(0).getContent()
+            .getParts(0).getText());
+    }
+}
+\end{lstlisting}
+
+\subsection{Hinnoittelu}
 
 Gemini 1.0 Pron hinta syötteenä annetuille kuville on \$0.0025 / kuva, videolle
 \$0.002 / sekunti, tekstille \$0.000125 / 1000 merkkiä ja ulostulolle
@@ -124,6 +235,96 @@ siirtymään Geminin pariin \parencite{googlePaLMAPIDeprecated}. Myös hinnoitte
 ja maininta Bison Text ja Chat -malleista on poistettu, vaikka malleja on vielä
 mahdollista käyttää 2024 alkukesästä Vertex AI:n kirjastojen avulla.
 
+\subsection{Käyttö}
+
+PaLM 2 käyttäminen onnistuu VertexAi:n kautta vastaavasti kuin Geminin ja
+tämä on esitelty kohdassa \ref{lst:PaLM2Service.java}.
+
+\begin{lstlisting}[
+    basicstyle=\small,
+    caption={Esimerkki toteutus siitä, miten PaLM2:sta voisi käyttää},
+    label={lst:PaLM2Service.java},
+    language=java,
+]
+// Merkitään luokka Serviceksi Spring Frameworkille
+@Service
+@RequiredArgsConstructor
+public class PaLM2Service {
+
+    // Luetaan ympäristömuuttujasta
+    @Value("${VERTEX_AI_PROJECT_ID}")
+    private String VERTEX_AI_PROJECT_ID;
+
+    @Value("${VERTEX_AI_LOCATION}")
+    private String VERTEX_AI_LOCATION;
+
+    @Value("${VERTEX_AI_PUBLISHER:google}")
+    private String VERTEX_AI_PUBLISHER;
+
+    private final VertexAI vertexAI;
+
+    // Luodaan konfiguraatio kielimallille
+    private com.google.protobuf.Value getParameters()
+        throws InvalidProtocolBufferException, JsonProcessingException
+    {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("temperature", 0.2);
+        parameters.put("maxOutputTokens", 1000);
+        parameters.put("topP", 0.95);
+        parameters.put("topK", 40);
+        return convertMapToValue(parameters);
+    }
+
+    public void example() {
+        // Määritellään käytettävä päätepiste
+        var endpoint =
+            EndpointName.ofProjectLocationPublisherModelName(
+                VERTEX_AI_PROJECT_ID,
+                VERTEX_AI_LOCATION,
+                VERTEX_AI_PUBLISHER,
+                "text-bison"
+            );
+
+        // Muutetaan syöte haluttuun muotoon
+        Map<String, Object> instance = new HashMap<>();
+        instance.put("prompt", "Kerro vitsi");
+        var prompt = convertMapToValue(instance);
+
+        // Rakennetaan pyyntö
+        var request = PredictRequest.newBuilder()
+            // Käytetään luotua päätepistettä
+            .setEndpoint(endpoint.toString())
+            // Annetaan määritellyt asetukset
+            .setParameters(getParameters())
+            // Annetaan syöte
+            .addInstances(prompt)
+            .build()
+
+        // Tehdään pyyntö
+        PredictResponse predictResponse =
+            vertexAI.getPredictionServiceClient().predict(request);
+
+        // Tulostetaan vastaus
+        System.out.println(predictResponse
+            .getPredictions(0)
+            .getStructValue()
+            .getFieldsOrThrow("content")
+            .getStringValue());
+    }
+
+    // Apufunktio datan muuttamiseen haluttuun muotoon
+    private com.google.protobuf.Value convertMapToValue(
+        Map<String, Object> map
+    ) throws InvalidProtocolBufferException, JsonProcessingException {
+        String json = objectMapper.writeValueAsString(map);
+        com.google.protobuf.Value.Builder instanceValue =
+            com.google.protobuf.Value.newBuilder();
+        JsonFormat.parser().merge(json, instanceValue);
+        return instanceValue.build();
+    }
+}
+\end{lstlisting}
+
 \section{Llama}
 
 Llama on Meta AI:n 2023 helmikuussa esittelemä kokoelma kielimalleja
@@ -138,6 +339,22 @@ jotka on suunniteltu tiettyyn käyttötarkoitukseen kuten Llama Guard, joka
 pyrkii luokittelemaan sisältöä ja määrittelemään kehotteiden ja vastausten
 turvallisuutta \parencite{llamaGuard3} sekä Code Llama, joka puolestaan on
 suunniteltu täydentämään koodia \parencite{llamaOtherModels}.
+
+\subsection{Käyttö}
+
+Vertex AI:n Model Gardenissa on ollut 23.07.2024 alkaen tarjolla Llama 3.1:sta
+API Service, joka mahdollistaa Llama 3.1:n käyttämisen vastaavasta kuin
+Geminin. Tämän ansiosta mallia ei tarvitse itse pystyttää, jolle laskutus olisi
+tuntipohjainen vaan laskutus tapahtuu käytettyjen tokenien mukaan.
+\parencite{vertexAiModelGardenLlama3}
+
+Vertex AI:n SDK tukee valmiiksi useita eri modeleita, myös muita kuin Geminin
+eri variaatioita, joten toteutus voi olla käytännössä täysin sama kuin aiemmin
+esiltelty toteutus Geminin kanssa kohdassa \ref{lst:GeminiService.java}.
+Luomalla oman servicen saadaan kuitenkin mukautettua sisällössä annettava ohje
+sekä parametrit sopivammaksi Llama 3.1-mallille.
+
+\subsection{Hinnoittelu}
 
 Useat kolmannet osapuolet tarjoavat rajapinnan, jonka kautta mallia on
 mahdollista käyttää ja hinnoittelu pohjautuu tokenien määrään. Halvin
@@ -209,6 +426,113 @@ on myös Anthropic API, joka vaatii aktiivisen tilauksen. APIa voi käyttää
 tarjolla olevien kirjastojen avulla tai vaihtoehtoisesti suorittaa itse kutsuja
 API-dokumentaation mukaisesti. Claude on saatavilla myös AWS Bedrockin sekä
 Vertex AI:n kautta. \parencite{anthropicAPIDocs}
+
+\subsection{Käyttö}
+
+Anthropic tarjoaa vain python kirjastoja Clauden käyttöön, joten sovellukseen
+integrointi tehdään kutsuen suoraan saatavilla olevaa rajapintaa. Yksi
+yksinkertainen vaihtoehto on käyttää openfeign:iä, joka saadaan käyttöön
+lisäämällä `pom.xml`:n riippuvuuksiin \ref{lst:openfeign-pom.xml} mukainen
+riippuvuus.
+
+\begin{lstlisting}[
+    basicstyle=\small,
+    caption={spring-cloud-starter-openfeign riippuvuus pom.xml tiedostoon},
+    label={lst:openfeign-pom.xml},
+    language=xml,
+]
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-openfeign</artifactId>
+    <version>4.1.3</version>
+</dependency>
+\end{lstlisting}
+
+Openfeign riippuvuuden lisäämisen jälkeen saadaan määritään kohdassa
+\ref{lst:ClaudeConfig.java} oleva konfiguraatio, jotta saadaan jokaiseen
+pyyntöön lisätty otsikkotietoihin API-avain ja versio, joita rajapinnan
+käyttämisen vaatii \parencite{anthropicAPIDocsVersions}
+\parencite{anthropicAPIDocsGettingStarted}.
+
+\begin{lstlisting}[
+    basicstyle=\small,
+    caption={Konfiguraation Claude:lle luodulle Openfeign clientille},
+    label={lst:ClaudeConfig.java},
+    language=java,
+]
+public class ClaudeConfig {
+
+    // Luetaan ympäristömuuttujista API avain
+    @Value("${CLAUDE_API_KEY}")
+    private String CLAUDE_API_KEY;
+
+    @Bean
+    public RequestInterceptor requestInterceptor(){
+        // Lisätään käytettävä versio ja API avain pyyntöjen
+        // otsikkotietoihin
+        return requestTemplate -> {
+            requestTemplate.header("anthropic-version", "2023-06-01");
+            requestTemplate.header("x-api-key", CLAUDE_API_KEY);
+        };
+    }
+}
+\end{lstlisting}
+
+Tämän jälkeen määritellään interface, josta OpenFeign luo käytettävän clientin.
+Kyseinen interface on nähtävissä kohdassa \ref{lst:ClaudeApiClient.java}.
+
+\begin{lstlisting}[
+    basicstyle=\small,
+    caption={Konfiguraation Claude:lle luodulle Openfeign clientille},
+    label={lst:ClaudeApiClient.java},
+    language=java,
+]
+// Kerrotaan OpenFeign:lle, että tämän interfacen perusteella tulee
+// luoda toteutus Clause API:a varten
+@FeignClient(
+    name = "claude-api",
+    url = "https://api.anthropic.com/v1/",
+    configuration = ClaudeConfig.class
+)
+public interface ClaudeApiClient {
+
+    // Määritellään mahdolliset pyynnöt
+
+    @PostMapping("messages")
+    MessagesResponse messages(@RequestBody MessagesRequest messagesRequest);
+}
+\end{lstlisting}
+
+OpenFeign luo määritellyn interfacen pohjalta automaattisesti ilmiintymän, jota
+voidaan käyttää kohdan \ref{lst:ClaudeService.java} mukaisesti.
+
+\begin{lstlisting}[
+    basicstyle=\small,
+    caption={Konfiguraation Claude:lle luodulle Openfeign clientille},
+    label={lst:ClaudeService.java},
+    language=java,
+]
+// Merkitään luokka Serviceksi Spring Frameworkille
+@Service
+@RequiredArgsConstructor
+public class ClaudeService {
+
+    // OpenFeign luo automaattisesti ilmiintymän, jonka Spring
+    // Framework alustaa tähän muuttujaan
+    private final ClaudeApiClient claudeApiClient;
+
+    public void example() {
+        // Luodaan pyyntö
+        var request = new MessagesRequest(new Message("user", "Hello world!"));
+        // Tehdään pyyntö
+        var response = claudeApiClient.messages(request);
+
+        // Tässä voidaan käsitellä saatu vastaus miten halutaan
+    }
+}
+\end{lstlisting}
+
+\subsection{Hinnoittelu}
 
 Clauden hinnoittelu vaihtelee hiukan sivuston mukaan. Claude.ai:n Pro-tilauksen
 hinnoiksi ilmoitetaan \$20 tai 18€ + ALV ja Team-tilaukselle \$25/\$30 tai

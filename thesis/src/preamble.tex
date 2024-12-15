@@ -63,6 +63,19 @@
 \usepackage{makecell}
 \usepackage{colortbl}
 \usepackage{listings}
+\usepackage{wrapfig}
+
+\lstset{
+    numberstyle     = \footnotesize,
+    numbers         = left,
+    backgroundcolor = \color{gray!10},
+    frame           = single,
+    inputencoding   = utf8,  % Input encoding
+    extendedchars   = true,  % Extended ASCII
+    literate        =        % Support additional characters
+      {ä}{{\"a}}1 {ö}{{\"o}}1
+      {Ä}{{\"A}}1 {Ö}{{\"O}}1
+}
 
 %%%%% Your commands.
 

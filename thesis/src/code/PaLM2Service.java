@@ -12,7 +12,9 @@ public List<StoryLine> createStoryLines(Story story) {
                 .build());
 
         String json = predictResponse
-            .getPredictions(0).getStructValue().getFieldsOrThrow("content")
+            .getPredictions(0)
+            .getStructValue()
+            .getFieldsOrThrow("content")
             .getStringValue()
             .replaceFirst("```json\n", "")
             .replaceFirst("```", "");
@@ -20,6 +22,7 @@ public List<StoryLine> createStoryLines(Story story) {
         return objectMapper.readValue(json, new TypeReference<>() {});
     } catch (IOException e) {
         log.warn("Failed to generate story: {}", e.getMessage());
-        throw new InternalServerErrorException("Failed to generate story");
+        throw new InternalServerErrorException(
+            "Failed to generate story");
     }
 }
