@@ -166,13 +166,108 @@ public interface StoryLineService {
 }
 \end{lstlisting}
 
+\subsection{Gemini toteutus}
+
 Aiemmin \ref{lst:GeminiService.java} kohdassa esiteltyyn GeminiService saadaan
 toteuttamaan StorylineService-interface liitteen \ref{ch:gemini-service}
 mukaisesti, jonka jälkeen kielimallilla saadaan tuotettua esimerkiksi kuvassa
 \ref{fig:isosapp-tyokalut-tarinan-generointi-2} näkyvä tarina.
+
+\subsection{PaLM2 toteutus}
 
 Vastaavasti \ref{lst:PaLM2Service.java} kohdassa esitelty PaLM2Service saadaan
 toteuttamaan StorylineService-interface liitteen \ref{ch:palm2-service}
 mukaisesti. PaLM 2:lle ei ole tarjolla vastaavaa ChatSessionia, kuin Geminille,
 joten on sille toteutettu vain tarinan luonti, muttei mahdollisuutta jatkaa
 tarinaa.
+
+\subsection{xAI:n toteutus}
+
+XAI:n rajapinnan dokumentaatiossa on määritelty 'response\_format'-kenttä, mutta
+kyseiselle kentälle ei ole määritelty tyyppiä \parencite{xAIDocsEndpoints}.
+Mahdollinen formaatti kyseiselle kentälle löydetään Githubissa olevasta
+issuesta \parencite{githubBerriAIlitellmIssues6610}, jossa ongelmana on se,
+ettei vastauksen formatointi ole tuettu sillä hetkellä. Testaamalla samalla
+formaatilla saamme itsekkin vastauksena kohdassa \ref{lst:xai-bad-request.json}
+näkyvän virheviestin ettei ainakaan kyseinen formatointi ole käytössä.
+
+\begin{lstlisting}[
+    basicstyle=\small,
+    caption={XAI rajapinnan palauttama vastaus, kun yritetään määrittää 'response\_format'-kenttä},
+    label={lst:xai-bad-request.json},
+]
+{
+    "code":"Client specified an invalid argument",
+    "error":"The model does not support formatted output but some
+      have been specified in the request."
+}
+\end{lstlisting}
+
+Vaikkei rajapinta suoraan vaikuta tukevan vastauksen muotoilua, voidaan ohjeet
+muotoiluun antaa kirjallisesti. Alustamalla keskustelu system-roolilta
+tulevalla viestillä:
+
+\begin{quotation}
+    \noindent Olet käsikirjoittaja. Luot tarinan käyttäjän antaman syötteen
+    perusteella.
+
+    \noindent Vastauksesi tulee olla JSON-muodossa oleva lista, joka koostuu
+    olioista, joilla on kolme attribuuttia: type, target ja content. Type voi
+    olla joko `ACTION` tai `TALK` riippuen siitä, onko kyseessä jotakin mitä
+    tapahtuu vai jotain mitä joku sanoo. Target kuvastaa sitä kuka tekee tai
+    kuka sanoo. Content kuvastaa sitä mitä tapahtuu tai sanotaan.
+\end{quotation}
+
+saadaan vastaukset halutussa JSON-muodossa, jonka myötä saadaan viesti
+parsittua StoryLineService-interfacen metodien vastauksien haluamaan
+muotoon antamalla vastaus suoraan JSON-parserille kohdan
+\ref{lst:XAIService.java::parseResponse} mukaisesti.
+
+\begin{lstlisting}[
+    basicstyle=\small,
+    caption={XAI rajapinnan palauttaman vastauksen parsiminen haluttuun muotoon},
+    label={lst:XAIService.java::parseResponse},
+    language=java,
+]
+private List<StoryLine> parseResponse(Message message)
+    throws IOException
+{
+    // Luetaan viestin sisältö ja poistetaan ylimääräinen muotoilu
+    String json = message.content()
+        .replaceFirst("```json\n", "")
+        .replaceFirst("```", "");
+
+    // Luetaan tekstimuodossa oleva json listaksi StoryLine-olioita
+    return objectMapper.readValue(json, new TypeReference<>() {});
+}
+\end{lstlisting}
+
+Käytettävä rajapinta päätepiste pohjautuu alunperinkin siihen, että sinne
+lähetetään lista viesteistä. Tätä hyödyntämällä pystymme toteuttamaan
+toiminnallisuuden tarinan jatkamiseen. Pitämällä kirjaa aiemmista viesteistä
+voimme tarinan jatkamisessa yksinkertaisesti hakea vanhat viestit ja pyytää
+jatkamaan tarinaa kuten kohdassa \ref{lst:XAIService.java::continueStoryLines}
+olevassa toteutuksessa on tehty.
+
+\begin{lstlisting}[
+    basicstyle=\small,
+    caption={XAI rajapinnan palauttaman vastauksen parsiminen haluttuun muotoon},
+    label={lst:XAIService.java::continueStoryLines},
+    language=java,
+]
+public List<StoryLine> continueStoryLines(Story story) {
+    // Haetaan keskustelun vanhat viestit
+    List<Message> messages = chats.get(story.getId());
+
+    // Tarkistetaan ettei tarina kasva liian pitkäksi
+    if (story.getLines().size() > 50 || messages.size() > 10)
+        throw new BadRequestException("Tarina on liian pitkä!");
+
+    // Lisätään käyttäjän pyyntö jatkaa tarinaa
+    messages.add(new Message("user", "Jatka tarinaa"));
+
+    // tehdään pyyntö
+    // parsitaan vastaus
+    // palautetaan uudet rivit
+}
+\end{lstlisting}

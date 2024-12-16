@@ -428,6 +428,7 @@ API-dokumentaation mukaisesti. Claude on saatavilla myös AWS Bedrockin sekä
 Vertex AI:n kautta. \parencite{anthropicAPIDocs}
 
 \subsection{Käyttö}
+\label{ch:claude-usage}
 
 Anthropic tarjoaa vain python kirjastoja Clauden käyttöön, joten sovellukseen
 integrointi tehdään kutsuen suoraan saatavilla olevaa rajapintaa. Yksi
@@ -488,7 +489,7 @@ Kyseinen interface on nähtävissä kohdassa \ref{lst:ClaudeApiClient.java}.
     language=java,
 ]
 // Kerrotaan OpenFeign:lle, että tämän interfacen perusteella tulee
-// luoda toteutus Clause API:a varten
+// luoda toteutus Claude rajapinnalle
 @FeignClient(
     name = "claude-api",
     url = "https://api.anthropic.com/v1/",
@@ -562,3 +563,145 @@ kannalta oleellisia lisätoiminnallisuuksia. Pro-tilaus lisää viisin kertaisen
 käyttörajan verrattuna ilmaiseen ja Team-tilaus sitäkin suuremman.
 \parencite{anthropicPricing} \parencite{claudePricing} Selviä käyttörajoja ei
 ole saatavilla.
+
+\section{xAI}
+
+XAi on Elon Muskin johtama tekoälyritys, joka on luonut Grok-kielimallin
+\parencite{xAIAbout}. Grok kielimallin on epäilty olevan vain yksi kielimalli
+lisää muiden joukossa \parencite{fireshipElonsGrokAI}, jonka perustamisen
+taustalla vaikuttaa olevan ennemminkin huumoriset päähänpistokset
+\parencite{twitter1679182035645235200} ja erimielisyydet ja oikeusjutut
+muun muassa OpenAI:n kanssa, jonka perustajistoon Elon Musk kuuluu
+\parencite{fireshipElonsLawsuitAgainstOpenAI}.
+
+Marraskuussa 2024 Grok kielimallille avattiin rajapinta, jota kehittäjät
+pääsevät kokeilemaan vähintään vuoden 2024 loppuun asti. Jokaiselle
+rekisteröityneelle annetaan ilmaista kredittiä 25 dollarin verran
+kuukaudessa. Rajapinta on toteuttu yhteensopivaksi OpenAI:n ja Anthropicin
+tarjoamien rajapintojen kanssa, joka mahdollistaa jo tehtyjen toteutuksien
+erittäin helpon vaihtamisen käyttämään xAI:n rajapintaa. \parencite{xAIBlogApi}
+
+\subsection{Käyttö}
+
+Dokumentaatiossa luetellut integraatiot pohjautuvat olemassa oleviin OpenAI:n
+ja Anthropic SDK:oihin, jotka on toteutettu JavaScriptille ja Pythonille
+\parencite{xAIDocsIntegrations}. Näiden käyttö ei tällöin onnistu suoraan
+työn ohella tehdyn sovelluksen kanssa, joten toteutus tulee tehdä tarjolla
+olevan REST-rajapinnan kautta, kuten luvussa \ref{ch:claude-usage} tehtiin
+Clauden kanssa.
+
+Saamme API-avaimen määriteltyä dokumentaation mukaisesti otsikkotietoihin
+kohdassa \ref{lst:XAIConfig.java} esitellyllä tavalla.
+
+\begin{lstlisting}[
+    basicstyle=\small,
+    caption={Konfiguraation xAI:lle luodulle Openfeign clientille},
+    label={lst:XAIConfig.java},
+    language=java,
+]
+public class XAIConfig {
+
+    // Luetaan api avain ympäristömuuttujista
+    @Value("${XAI_API_KEY:}")
+    private String XAI_API_KEY;
+
+    @Bean
+    public RequestInterceptor requestInterceptor() {
+        // Lisätään API-avain Authorization-otsikkotietoon
+        return requestTemplate -> requestTemplate
+            .header("Authorization", "Bearer " + GROK_API_KEY);
+    }
+}
+\end{lstlisting}
+
+Tämän jälkeen määritellään interface, josta OpenFeign luo käytettävän clientin.
+Kyseinen interface on nähtävissä kohdassa \ref{lst:XAIApiClient.java}.
+
+\begin{lstlisting}[
+    basicstyle=\small,
+    caption={Interface xAI:n rajapinnasta},
+    label={lst:XAIApiClient.java},
+    language=java,
+]
+// Kerrotaan OpenFeign:lle, että tämän interfacen perusteella tulee
+// luoda toteutus xAI rajapinnasta
+@FeignClient(
+    name = "xai-api",
+    url = "https://api.x.ai/v1/",
+    configuration = XAIConfig.class
+)
+public interface XAIApiClient {
+
+    // Määritellään mahdolliset pyynnöt
+
+    @PostMapping("chat/completions")
+    ChatCompletionsResponse chatCompletions(
+        @RequestBody ChatCompletionsRequest chatCompletionsRequest
+    );
+}
+\end{lstlisting}
+
+OpenFeign luo määritellyn interfacen pohjalta automaattisesti ilmiintymän, jota
+voidaan käyttää kohdan \ref{lst:XAIService.java} mukaisesti.
+
+\begin{lstlisting}[
+    basicstyle=\small,
+    caption={Service, jossa varsinanen rajapinnan kutsuminen tapahtuu},
+    label={lst:XAIService.java},
+    language=java,
+]
+// Merkitään luokka Serviceksi Spring Frameworkille
+@Service
+@RequiredArgsConstructor
+public class GrokService {
+
+    // OpenFeign luo automaattisesti ilmiintymän, jonka Spring
+    // Framework alustaa tähän muuttujaan
+    private final GrokApiClient grokApiClient;
+
+    public void example() {
+        // Alustetaan keskustelu
+        List<Message> messages = new ArrayList<>();
+        messages.add(new Message("system", "Kerrot vitsejä käyttäjän antamista aiheista"));
+        messages.add(new Message("user", "omena"));
+
+        // Luodaan pyyntö keskustelun pohjalta
+        ChatCompletionsRequest request =
+            new ChatCompletionsRequest("grok-beta", messages);
+
+        // Kutsutaan rajapintaa luodulla pyynnöllä
+        ChatCompletionsResponse response =
+            grokApiClient.chatCompletions(request);
+
+        // Tulostetaan vastaus
+        System.out.println(
+            response.choices().getFirst().message().content());
+    }
+}
+\end{lstlisting}
+
+\subsection{Hinnoittelu}
+
+XAI:n rajapinnan hinnoittelua ei ole avattu julkisilla sivuilla, mutta
+rekisteröitymällä osaksi uuden rajapinnan julkaista beta ohjelmaa pääsee
+näkemään eri mallien hinnoittelut ja rajoitukset. Nämä hinnat on koottu
+taulukkoon \ref{tab:grok-prices} joulukuussa 2024.
+
+\begin{table}[H]
+    \centering
+    \rowcolors{2}{gray!25}{white}
+    \caption{xAI:n tarjomien kielimallien hinnat}
+    \label{tab:grok-prices}
+    \begin{tabular}{llcc}
+        \textbf{Malli} & \textbf{Syöttö (teksti)} & \textbf{Syöttö (kuva)} & \textbf{Ulostulo} \\
+        \hline
+        grok-beta          & \$5.00 / MTok &             - & \$15.00 / MTok \\
+        grok-vision-beta   & \$5.00 / MTok & \$5.00 / MTok & \$15.00 / MTok \\
+        grok-2-vision-1212 & \$2.00 / MTok & \$2.00 / MTok & \$10.00 / MTok \\
+        grok-2-1212        & \$2.00 / MTok &             - & \$10.00 / MTok \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Vastaavat tiedot malleista ja hinnoista saa haettua myös xAI:n rajapinnan
+tarjoamasta päätepisteestä. \parencite{xAIDocsEndpoints}
