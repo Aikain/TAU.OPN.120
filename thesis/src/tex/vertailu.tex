@@ -1,61 +1,9 @@
-\chapter{Kielimallien vertailu}%
+\chapter{Kielimallien vertailu}
 \label{ch:vertailu}
 
-\begin{itemize}
-  \item Kuinka tärkeitä mitkäkin ominaisuudet, mitä painotetaan yms.
-  \item Mitkä ovat kriteerit
-  \begin{itemize}
-    \item Onko jo käytettävissä (vapaasti käytettävissä vai vasta jotain kevyitä trialeita, joilla ei voi oikeasti tehdä mitään)?
-    \item Onko käytettävissä millaisella työmäärällä?
-    \item SaaS vs itse-hostattava tms.?
-    \item Hinta
-    \item Miten hyvin suoritutuu annetusta tehtävästä?
-    \item Miten hyvin käsittelee "huonoja tilanteita" (esim. syöte on onnetonta, tuottaako mitään järkevää tai saako tiedon ettei syöte ollut hyvää tms.)
-    \item Toimiiko suomeksi vai tarvitaanko erillinen kääntäminen?
-  \end{itemize}
-  \item Joku vertailutaulukko?
-  \item  Käytännössä kaikki seuraavista on transformer arkkitehtuurin päälle rakennettuja etukäteen koulutettuja.
-  \begin{itemize}
-    \item GPT
-    \begin{itemize}
-      \item Generative pre-trained transformer
-      \item OpenAI:n kehittämä
-    \end{itemize}
-    \item Bloom
-    \begin{itemize}
-      \item BigScience Large Open-science Open-access Multilingual Language Model
-      \item Useamman tahon kehittämä
-      \item Modified from Megatron-LM GPT2
-      \item Decored only
-    \end{itemize}
-    \item FinBERT
-    \item Finnish GPT-3
-  \end{itemize}
-  \item https://huggingface.co/AaltoSpeech
-  \begin{itemize}
-    \item CombFinnish-AED-CRDNN / Automatic Speech Recognition / Jonkin sortin puheentunnistusta?
-  \end{itemize}
-  \item https://huggingface.co/Helsinki-NLP
-  \begin{itemize}
-    \item simple-finnish-gpt3-xl / Text Generation / finetuned versio TurkuNLP/gpt3-finnish-xl:sta
-  \end{itemize}
-  \item https://huggingface.co/TurkuNLP
-  \begin{itemize}
-    \item bert-base-finnish-cased-v1, vertailujen mukaan parempi kuin Googlen multilingual (https://github.com/google-research/bert/blob/master/multilingual.md)
-    \item löytyy myös uncased versio
-    \item löytyy large variant
-    \item toxicity versio, joka ilmeisesti tunnistaa 6 eri tyyppistä toxicityä
-    \item QA versio
-    \item bloom-finnish-176b / Text Generation / rakennettu bloom:in päälle sisältämään suomenkielisiä datasettejä
-    \item gpt3-finnish-X / Text Generation / useampi erikokoinen GPT-3-malli, "puhtaita kielimalleja" eli ei ole hienosäädetty mm. vuoropuheluun tai kysymyksiin
-    \item sbert-cased-finnish-paraphrase / Sentence Similarity / tunnistaa virkkeiden samankaltaisuutta
-  \end{itemize}
-  \item https://huggingface.co/Finnish-NLP
-  \item https://huggingface.co/tasks
-  \item https://huggingface.co/models?pipeline\_tag=text-generation\&language=fi\&sort=trending
-  \item https://huggingface.co/Finnish-NLP/llama-7b-finnish
-  \item https://huggingface.co/TurkuNLP/gpt3-finnish-3B
-\end{itemize}
+TODO: yleistä kielimallien vertailusta?
+
+TODO: Minkä pohjalta kielimalli valitaan integroitavaksi loppuun asti?
 
 \section{Google Gemini}
 
