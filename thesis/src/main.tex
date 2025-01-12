@@ -86,6 +86,12 @@
 \def\mymonth{06}
 \def\myday{16}
 
+% Define your citation options here. Valid values for style and sorting options
+% can be found in the BibLaTeX manual: https://ctan.org/pkg/biblatex.
+
+\def\mycitationstyle{numeric}
+\def\mycitationsorting{nyt}
+
 %%%%% PREAMBLE %%%%%
 
 %%%%% Document class declaration.
@@ -94,10 +100,6 @@
 %
 %   finnish - thesis in Finnish (default)
 %   english - thesis in English
-%   numeric - citations in numeric style (default)
-%   authoryear - citations in author-year style
-%   apa - citations in APA 7 (available only in English)
-%   ieee - citations in IEEE style (available only in English)
 %   draft - for faster non-final works, also skips images
 %           (recommended, remove in final version)
 %   programs - if you wish to display code snippets
@@ -130,6 +132,8 @@
 \abstract{tex/tiivistelma.tex}
 
 % \otherabstract{tex/abstract.tex}
+
+\aidisclaimerinclusioncmd
 
 \preface{tex/alkusanat.tex}{Tampereella}
 
