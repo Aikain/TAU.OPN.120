@@ -30,19 +30,64 @@ Perinteisen tekstin tuottamisen lisäksi kielimalleja käytetään mm. kuvan,
 äänen ja videon tuottamiseen. Kielimalleja on yhdistelty ja ne voivatkin
 ymmärtää useita eri syötteitä ja tuottaa tuloksia sen mukaan.
 
-TODO: Mitä niillä ei voi tehdä? (strawberry esimerkki?)
+Kielimalleilla on kuitenkin haasteita, joihin ne eivät kykene. Näitä ovat muun
+muuassa kielen syvällisempien merkitysten ja ihmisten monimutkaisten
+kommunikaatiomuotojen ymmärtäminen. Kielimallit eivät kykene abstraktiin
+ajatteluun, tunteiden ymmärtämiseen tai syvälliseen kontekstuaaliseen
+analyysiin. \parencite{haukkaJimiKuinkakielimallitOppivat}. Yksi sosiaalisessa
+mediassa levinnyt esimerkki on hyvinkin yksinkertainen kysymys: "Kuinka monta
+R-kirjainta on sanassa 'strawberry'?" \parencite{alberttechStrawberry}, jonka
+juurisyy pohjautuu kielimallien tapaan käsitellä annettua syötettä.
+
+Kielimallien antamassa tulosteessa voi olla virheitä useista syistä.
+Koulutusaineistossa voi olla vinoumia, jonka myötä kielimalli voi tehdä
+helposti vääriä johtopäätelmiä. Kielimallit antavat lisäksi välillä täysin
+väärää tietoa, joka voi johtaa täysin harhaan ja käyttäjän onkin hankala
+arvioida luotettavuutta ilman alkuperäistä lähdettä.
+\parencite{akavaworksNakokulmiaTekoalyynOsa6}
 
 \subsection{Tekstistä kuvaksi}
 
-TODO: Imagen 3?
-TODO: DALL-E 3?
-TODO: Midjourney?
-TODO: Stable diffusion?
+Ensimmäisiä selvästi suurempaan suosioon nousseita tekstistä kuvaksi -malleja,
+eli malleja jotka tuottavat kuvan annetun tekstisyötteen perusteella, olivat
+OpenAI:n DALL-E \parencite{openAIDallE} ja Stability AI:n Stable Diffusion
+\parencite{stableDiffusionLaunch} sekä Midjourney
+\parencite{twitter1547108864788553729}.
+
+Yksi tuoreimmista on joulukuussa 2024 Googlen DeepMindin julkaisema uusin
+versio Imagen 3 -mallista. Mallin kerrotaan kyekenevän luomaan korkealaatuisia
+kuvia annetusta tekstisyötteestä. Kielimallien on arvioitu olevan paras kun
+otetaan huomioon tasapaino kaikkien laatukriteetien välillä. Yksittäisissä
+testeissä, kuvan visuaalisessa houkuttelevuudessa, MidJourney v6 on arvioitu
+paremmaksi, mutta kokonaisuutta arvioiden Imagen 3 -mallin arvioidaan olevan
+tällä hetkellä paras. \parencite{googleDeepmindImagen3_v3report}
+
+Malleilla on kuitenkin yhä haasteita tiettyjen ominaisuuksien kanssa. Muun
+muassa objektien tarkan lukumäärän tuottaminen on haastavaa sekä monet
+kehotukset, jotka vaativat parempaa päättelyä ymmärtämisen suhteen, kuten
+"talo on samankokoinen kuin kissa". \parencite{googleDeepmindImagen3_v3report}
 
 \subsection{Tekstistä ääneksi}
 
-TODO: https://suno.com/ ?
-TODO: https://www.udio.com/ ?
+Tekstistä ääneksi -mallit luovat annetun kuvauksen perusteella äänen.
+\parencite{liu2023audioldmtexttoaudiogenerationlatent}. Näitä ei ole sekoittaa
+tekstistä puheeksi -järjestelmiin jotka muuntavan tekstin puhutuksi.
+
+Nämä mallit eivät välttämättä ole saaneet yhtä suurta näkyvyyttä kuin
+visuaalisemmat mallit. Merkittävää edistystä on kuitenkin mallien kanssa
+tapahtunut viimeisten vuosien aikana
+\parencite{liu2023audioldmtexttoaudiogenerationlatent}.
+
+Avoimeen lähdekoodiin pohjautuvista ratkaisuista esille tulee Suno:n luoma
+Bark-malli. Malli tuottaa realistista, monikielistä puhetta sekä muita ääniä,
+kuten musiikkia, taustamelua ja yksinkertaisia äänitehosteita. Malli kykenee
+tuottamaan myös sanotonta viestintää, kuten naurua, huokailua ja itkua.
+\parencite{githubSunoAiBark}
+
+Osa malleista on erikoitustunut erityisesti musiikin tuottamiseen, jolloin
+malleja saatetaankin kutsua tekstistä musiikiksi -malleiksi. Tällaisia malleja
+ovat esimerkiksi Udio \parencite{udioAboutUs} ja MusicGen
+\parencite{copet2024simplecontrollablemusicgeneration}.
 
 \subsection{Tekstistä videoksi}
 
