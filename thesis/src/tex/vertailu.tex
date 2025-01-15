@@ -1,9 +1,20 @@
 \chapter{Kielimallien vertailu}
 \label{ch:vertailu}
 
-TODO: yleistä kielimallien vertailusta?
+Eri kielimalleja löytyy erittäin paljon ja variaatioita jo pelkästään yhdestä
+kielimallista voi löytyä useita variaatioita. 2025 tammikuussa hakemalla
+HuggingFacesta malleja rajoituksella "Text Generation", saadaan tuloksia lähes
+170 000. Tässä työssä on tuotu esille joitain jossain määrin tunnetuimmista
+kielimalleista isoimmilta tekijöiltä. Kielimallien tunnettavuutta korostaa muun
+muassa se, että kielimalliet esiintyvät toisten isojen kielimallien sivuilla ja
+raporteissa vertailussa.
 
-TODO: Minkä pohjalta kielimalli valitaan integroitavaksi loppuun asti?
+Varsinaisen toteutuksen kannalta rajoituksina on ensisijaisesti hinta. Koska
+mallien toimintaa on tarkoitus vain testata, eikä ottaa pysyvään käyttöön, on
+lähtökohtaisesti käytön mukaan hinnoiteltu hinnoittelu parempi. Tärkeänä
+kriteerinä on myös se, että kielimallia on mahdollista saada käyttöön
+kohtuullisille määrällä työtä. Näiden kriteerien myötä valituista kielimalleista
+on esitelty kielimallien perustiedot, toteutustapa sovellukseen ja hinnoittelu.
 
 \section{Google Gemini}
 
@@ -653,3 +664,22 @@ taulukkoon \ref{tab:grok-prices} joulukuussa 2024.
 
 Vastaavat tiedot malleista ja hinnoista saa haettua myös xAI:n rajapinnan
 tarjoamasta päätepisteestä. \parencite{xAIDocsEndpoints}
+
+\section{Sovellukseen valittavat kielimallit}
+
+Aiemmin määriteltyjen ehtojen mukaisesti, on sovellukseen valittavissa
+kielimalleissa ensisijaisena vaatimuksena hinnoittelu ja toisena kohtuullinen
+tapa toteuttaa. Esitellyistä kielimalleista kaikki olivat mahdollista toteuttaa
+kohtuullisesti, joten käytännössä vain hinta ratkaisee.
+
+Esitellyistä kielimalleista Claude vaatii erillisen tilauksen, jotta se
+voitaisiin integroida sovellukseen eikä tarjoa käytönmukaista hinnoittelua tai
+vaihtoehtoisesti tarjoa kokeilujaksoa tai -krediittejä. VertexAI:n ansiosta
+saadaan integroitua Gemini, PaLM 2 ja Llama käytännössä yhdellä toteutuksella,
+joten ei ole syytä olla integroimatta niistä jotain kun integroidaan yksikin.
+Sovellukseen tehdään tuki useille kielimalleilla, jotta niitä voidaan kokeilla
+varsinaisessa käytössä, joten ei ole myöskään syytä olla integroimatta xAI:ta
+osaksi sovellusta. Sovellukseen valittuja kielimalleja ovat siis Gemini,
+PaLM 2, Llama ja xAI. Jokaisesta kielimallista valitaan tekohetkellä
+kielimallien uusin versio ja dokumentaation peruskäyttöön suosittelema
+variaatio, mikäli kielimallista on useita variaatioita.
