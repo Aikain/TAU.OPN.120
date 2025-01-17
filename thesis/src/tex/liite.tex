@@ -1,18 +1,188 @@
-\chapter{Gemini servicen osatoteutus}
-\label{ch:gemini-service}
 
-\lstinputlisting[
-    basicstyle=\small,
-    language=java,
-]{code/GeminiService.java}
+\chapter{Ohjeistus Gemini-kielimallille}
+\label{ch:gemini-guide}
 
-\chapter{PaLM 2 servicen osatoteutus}
-\label{ch:palm2-service}
+Tulosteen tulee olla JSON-muodossa. Vuorosanojen `type` on `TALK` ja tekemisten
+`ACTION`.
 
-\lstinputlisting[
-    basicstyle=\small,
-    language=java,
-]{code/PaLM2Service.java}
+Esimerkki:
+[\\
+    \{
+        "type": "ACTION",
+        "target": "Äiti",
+        "content": "tekee ruokaa kotona"
+    \},\\
+    \{
+        "type": "ACTION",
+        "target": "Ellu",
+        "content": "saapuu koulusta kotia"
+    \},\\
+    \{
+        "type": "TALK",
+        "target": "Ellu",
+        "content": "Moi äiti!"
+    \},\\
+    \{
+        "type": "TALK",
+        "target": "Äiti",
+        "content": "Moi rakas, mites koulussa meni?"
+    \},\\
+    \{
+        "type": "TALK",
+        "target": "Ellu",
+        "content": "Ihan hyvin, mutta olisi aika nälkä."
+    \},\\
+    \{
+        "type": "TALK",
+        "target": "Äiti",
+        "content": "Äiti on tässä tehnyt hyvää hernekeittoa."
+    \},\\
+    \{
+        "type": "TALK",
+        "target": "Ellu",
+        "content": "Hyi! En halua hernekeittoa"
+    \},\\
+    \{
+        "type": "TALK",
+        "target": "Äiti",
+        "content": "Pitää vähän maistaa"
+    \},\\
+    \{
+        "type": "ACTION",
+        "target": "Äiti",
+        "content": "tyrkyttää Ellulle hernekeittoa"
+    \},\\
+    \{
+        "type": "ACTION",
+        "target": "Ellu",
+        "content": "maistaa hernekeittoa ja kaatuu maahan"
+    \},\\
+    \{
+        "type": "ACTION",
+        "target": "Äiti",
+        "content": "kauhistuu"
+    \},\\
+    \{
+        "type": "TALK",
+        "target": "Äiti",
+        "content": "ELLU! Mitä sinulle kävi?!"
+    \},\\
+    \{
+        "type": "TALK",
+        "target": "Äiti",
+        "content": "Täytyy soittaa hätäkeskukseen"
+    \},\\
+    \{
+        "type": "ACTION",
+        "target": "Äiti",
+        "content": "soittaa hätäkeskukseen"
+    \},\\
+    \{
+        "type": "TALK",
+        "target": "Hätäkeskus",
+        "content": "Hätäkeskus, mikä hätänä"
+    \},\\
+    \{
+        "type": "TALK",
+        "target": "Äiti",
+        "content": "Ellu kaatui maahan"
+    \},\\
+    \{
+        "type": "TALK",
+        "target": "Äiti",
+        "content": "Mikä osoite?"
+    \},\\
+    \{
+        "type": "TALK",
+        "target": "Äiti",
+        "content": "Ellunkatu 13"
+    \},\\
+    \{
+        "type": "TALK",
+        "target": "Hätäkeskus",
+        "content": "Laitetaaan apua tulemaan"
+    \},\\
+    \{
+        "type": "ACTION",
+        "target": "Ambulanssi kuski",
+        "content": "saapuu paikalle"
+    \},\\
+    \{
+        "type": "TALK",
+        "target": "Ambulanssi kuski",
+        "content": "Mikä hätänä?"
+    \},\\
+    \{
+        "type": "ACTION",
+        "target": "Äiti",
+        "content": "(yrittää hysteeristesti sanoa jotain)"
+    \},\\
+    \{
+        "type": "ACTION",
+        "target": "Ambulanssi kuski",
+        "content": "yrittää mitata äidin pulssia"
+    \},\\
+    \{
+        "type": "TALK",
+        "target": "Äiti",
+        "content": "En minä vaan Ellu!"
+    \},\\
+    \{
+        "type": "ACTION",
+        "target": "Ambulanssi kuski",
+        "content": "mittaa Ellun pulssia"
+    \},\\
+    \{
+        "type": "TALK",
+        "target": "Ambulanssi kuski",
+        "content": "Se on kuollut, täytyy tilata hautaisurakoitsija paikalle"
+    \},\\
+    \{
+        "type": "ACTION",
+        "target": "Ambulanssi kuski",
+        "content": "soittaa hautaisurakoitsijalle"
+    \},\\
+    \{
+        "type": "ACTION",
+        "target": "Hautaisurakoitsija",
+        "content": "saapuu paikalle"
+    \},\\
+    \{
+        "type": "TALK",
+        "target": "Hautaisurakoitsija",
+        "content": "Täytyy mitata, miten sopii arkkuun."
+    \},\\
+    \{
+        "type": "ACTION",
+        "target": "Hautaisurakoitsija",
+        "content": "mittailee Ellua"
+    \},\\
+    \{
+        "type": "TALK",
+        "target": "Hautaisurakoitsija",
+        "content": "Kyllä näyttäis olevan sen verran iso, että täytyy laittaa keskeltä poikki"
+    \}\\
+]
 
-\chapter{Clauden rajapinnan kutsuminen}
-\label{ch:claude-example}
+\chapter{Ohjeistus PaLM2-kielimallille}
+\label{ch:palm2-guide}
+
+Tulosteen tulee olla JSON-muodossa oleva lista, jossa jokaisella oliolla on
+kolme attribuuttia: type, target ja content. Type on aina joko ACTION (kertoo,
+että content on toimintaa) tai TALK (kertoo, että content on vuorosanoja).
+Target on henkilö joka tekee tai puhuu asian. Content kertoo mitä tehdään tai
+puhutaan.
+
+\chapter{Ohjeistus Llama 3-kielimallille}
+\label{ch:llama3-guide}
+
+Kirjoita tarina vuorosanoilla. Tarinassa henkilöt saapuvat paikalle yksi tai
+kaksi henkilö kerrallaan. Henkilöt ehtivät hetken jutella tai tehdä jotain
+ennen kuin seuraava saapuu. Saapuvalla henkilöllä tulee olla syy, miksi saapuu
+paikalle.
+
+Tulosteen tulee olla JSON-muodossa oleva lista, jossa jokaisella oliolla on
+kolme attribuuttia: type, target ja content. Type on aina joko ACTION (kertoo,
+että content on toimintaa) tai TALK (kertoo, että content on vuorosanoja).
+Target on henkilö joka tekee tai puhuu asian. Content kertoo mitä tehdään tai
+puhutaan. Tulosteessa ei saa olla muua tekstiä kuin haluttu JSON.

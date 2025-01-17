@@ -50,6 +50,8 @@ mahdollisuus leiriläisille sekä huoltajille nähdä leiriin liittyviä asioita
 sovelluksesta. Toistaiseksi sovellus on kuitenkin vain ohjaajien ja isosten
 käytössä.
 
+\section{Sovelluksen esittely}
+
 Sovelluksesta löytyy kuvan \ref{fig:isosapp-leirit} mukaisesti kaikki leirit ja
 leirien osallistujat, niin ohjaajat, isoset kuin leiriläisetkin. Leirillä
 leiriläiset jaetaan leirillä isosryhmiin, jotka saadaan näkyviin leirin
@@ -168,22 +170,224 @@ public interface StoryLineService {
 
 \subsection{Gemini toteutus}
 
-Aiemmin \ref{lst:GeminiService.java} kohdassa esiteltyyn GeminiService saadaan
-toteuttamaan StorylineService-interface liitteen \ref{ch:gemini-service}
-mukaisesti, jonka jälkeen kielimallilla saadaan tuotettua esimerkiksi kuvassa
-\ref{fig:isosapp-tyokalut-tarinan-generointi-2} näkyvä tarina.
+Aiemmin kohdassa \ref{lst:GeminiServiceExample.java} esitelty GeminiService
+saadaan käyttöön toteuttamalla StorylineService-interfacessa määritellyt
+metodit tarinan luomiselle ja jatkamiselle esimerkin
+\ref{lst:GeminiService.java} mukaisesti. Geminin kanssa on mahdollista käyttää
+ChatSessionia, joka mahdollistaa viestien lähettämisen edestakaisin niin, että
+kielimallilla on suoraan käytettävissä aiempi viestittely kontekstina. Tämän
+ansiosta tarinaa on helppo jatkaa kunhan aiemmin luotu ChatSession on yhä
+käytettävissä.
 
-TODO: kattavampi selitys toteutuksesta
+\begin{lstlisting}[
+    basicstyle=\small,
+    caption={Esimerkki GeminiServicen StorylineService-interfacen vaatimien metodien toteutuksesta},
+    label={lst:GeminiService.java},
+    language=java,
+]
+// Map, johon voidaan tallentaa luodut ChatSessionit myöhempää
+// käyttöä varten
+private final Map<UUID, ChatSession> chatSessions =
+    new ConcurrentHashMap<>();
+
+@Override
+public List<StoryLine> createStoryLines(Story story) {
+    // Luodaan ilmiintymä mallista ja avataan ChatSession
+    GenerativeModel model = new GenerativeModel(
+        story.getModelName().getName(),
+        vertexAI
+    );
+    ChatSession chatSession = model.startChat();
+    chatSession.withGenerationConfig(createGenerationConfig());
+
+    // Tallennetaan ChatSession ConcurrentHashMap:iin, jotta tarinaa
+    // saadaan jatkettua tarvittaessa helposti.
+    chatSessions.put(story.getId(), chatSession);
+
+    // Pyydetään luomaan tarina
+    GenerateContentResponse response =
+        chatSession.sendMessage(createInitializeContent(story));
+
+    // Käsitellään vastaus
+    return parseResponse(response);
+}
+
+@Override
+public List<StoryLine> continueStoryLines(Story story) {
+    // Tarkistetaan onko luotua tarinaa mahdollista jatkaa
+    if (!chatSessions.containsKey(story.getId()))
+        throw new GoneException();
+
+    // Haetaan olemassa oleva ChatSession
+    ChatSession chatSession = chatSessions.get(story.getId());
+
+    // Pyydetään jatkamaan tarinaa
+    GenerateContentResponse response =
+        chatSession.sendMessage("Jatka tarinaa");
+
+    // Käsitellään vastaus
+    return parseResponse(response);
+}
+
+@Override
+public void cleanUp(Story story) {
+    // Poistetaan tallessa oleva ChatSession
+    chatSessions.remove(story.getId());
+}
+\end{lstlisting}
+
+Tarinan alustuksessa on annettu kielimallille sanallinen ohjeistus kohdan
+\ref{lst:GeminiService.java::createInitializeContent} ja liitteen
+\ref{ch:gemini-guide} mukaisesti, jossa on määritelty, missä muodossa vastaus
+halutaan ja mitä vastauksen pitäisi sisältää. Ohjeistukseen on liitetty
+käyttäjän antama syöte käyttöliittymästä.
+
+\begin{lstlisting}[
+    basicstyle=\small,
+    caption={Geminin ohjeistuksen luominen},
+    label={lst:GeminiService.java::createInitializeContent},
+    language=java,
+]
+private Content createInitializeContent(Story story) {
+    String guide = "..."; // Liittestä löytyvä ohjeistus
+
+    // Yhdistetään käyttäjän antama kuvaus ja ohjeistus tulosteesta
+    return ContentMaker.fromString(story.getText() + "\n\n" + guide);
+}
+\end{lstlisting}
+
+Gemini osaa tuottaa sanallisen ohjeistuksen mukaisesti vastauksen suoraan JSON-
+muodossa, jolloin se pystytään parsimaan ilman, että vastausta tarvitsee
+käsitellä sen enempää. Vastauksen parsiminen saadaan siis toteutettu hyvinkin
+yksinkertaisesti esimerkin \ref{lst:GeminiService.java::parseResponse}
+mukaisesti.
+
+\begin{lstlisting}[
+    basicstyle=\small,
+    caption={Geminin vastausten käsittely},
+    label={lst:GeminiService.java::parseResponse},
+    language=java,
+]
+private List<StoryLine> parseResponse(GenerateContentResponse response)
+    throws JsonProcessingException
+{
+    // Luetaan vastauksen teksti
+    String text = response.getCandidates(0)
+        .getContent()
+        .getParts(0)
+        .getText();
+
+    // Parsitaan luettu json-teksti listaksi StoryLine-ilmiintymiä
+    return objectMapper.readValue(text, new TypeReference<>() {});
+}
+\end{lstlisting}
+
+Toteutuksen jälkeen kielimallia voidaan käyttää tuottamaan kuvassa
+\ref{fig:isosapp-tyokalut-tarinan-generointi-2} näkyvä tarina kuvan
+\ref{fig:isosapp-tyokalut-tarinan-generointi-1} käyttöliittymän
+toiminnallisuudella.
 
 \subsection{PaLM2 toteutus}
 
 Vastaavasti \ref{lst:PaLM2Service.java} kohdassa esitelty PaLM2Service saadaan
-toteuttamaan StorylineService-interface liitteen \ref{ch:palm2-service}
-mukaisesti. PaLM 2:lle ei ole tarjolla vastaavaa ChatSessionia, kuin Geminille,
-joten on sille toteutettu vain tarinan luonti, muttei mahdollisuutta jatkaa
-tarinaa.
+toteuttamaan StorylineService-interface esimerkin
+\ref{lst:PaLM2Service.java::createStoryLines} mukaisesti. PaLM 2:lle ei ole
+tarjolla vastaavaa ChatSessionia, kuin Geminille, joten on sille toteutettu
+vain tarinan luonti, muttei mahdollisuutta jatkaa tarinaa.
 
-TODO: kattavampi selitys toteutuksesta
+\begin{lstlisting}[
+    basicstyle=\small,
+    caption={Esimerkki PaLM2Servicen StorylineService-interfacen metodien toteutuksesta},
+    label={lst:PaLM2Service.java::createStoryLines},
+    language=java,
+]
+@Override
+public List<StoryLine> createStoryLines(Story story) {
+    // Tehdään pyyntö kielimallille
+    PredictResponse predictResponse = vertexAI
+        .getPredictionServiceClient()
+        .predict(PredictRequest.newBuilder()
+            .setEndpoint(
+                getEndpointName(story.getModelName().getName())
+                .toString())
+            .addInstances(getPrompt(generatePrompt(story)))
+            .setParameters(getParameters())
+            .build());
+
+    // Käsitellään vastaus
+    return parseResponse(response);
+}
+\end{lstlisting}
+
+PaLM2-kielimallille on luotu vastaava ohjeistuis kuin Geminille, jossa
+määritellään minkälainen vastaus kielimallin tulisi tuottaa ja kielimallille
+annetaan käyttäjän antama syöte. Ohjeistuksen toteutus on nähtävissä kohdassa
+\ref{lst:PaLM2Service.java::generatePrompt} ja koko ohjeistus liitteessä \ref{ch:palm2-guide}.
+
+\begin{lstlisting}[
+    basicstyle=\small,
+    caption={PaLM2 ohjeistuksen luonti},
+    label={lst:PaLM2Service.java::generatePrompt},
+    language=java,
+]
+private String generatePrompt(Story story) {
+    String guide = "..."; // Liitteestä löytyvä ohjeistus
+
+    // Yhdistetään käyttäjän antama syöte ja ohjeistus
+    return story.getText() + "\n\n" + guide;
+}
+
+// Apufunktio ohjeistuksen muuttamiseen kielimallin haluamaan muotoon
+private com.google.protobuf.Value getPrompt(String prompt) throws
+    InvalidProtocolBufferException, JsonProcessingException
+{
+    Map<String, Object> instance = new HashMap<>();
+    instance.put("prompt", prompt);
+    return convertMapToValue(instance);
+}
+\end{lstlisting}
+
+PaLM2:sta ohjeistaessa sanallisesti, että tuloksen tulee olla JSON-muodossa,
+tulee tuloste Markdownin tukemassa JSON-muodossa, jossa varsinanen JSON osuus
+on ympäritöity JSON-koodiosiota tarkoittavilla merkinnöillä. Jotta tulos
+saadaan käsitelty, tulee vastauksesta saada nämä pois. Tämä saadaan toteutettua
+esimerkin \ref{lst:PaLM2Service.java::parseResponse} mukaisesti.
+
+\begin{lstlisting}[
+    basicstyle=\small,
+    caption={PaLM2 vastauksen käsittely},
+    label={lst:PaLM2Service.java::parseResponse},
+    language=java,
+]
+private List<StoryLine> parseResponse(PredictResponse response)
+    throws JsonProcessingException
+{
+    String json = response
+        .getPredictions(0)
+        .getStructValue()
+        .getFieldsOrThrow("content")
+        .getStringValue()
+        .replaceFirst("```json\n", "")
+        .replaceFirst("```", "");
+
+    return objectMapper.readValue(json, new TypeReference<>() {});
+}
+\end{lstlisting}
+
+\subsection{Llama 3 toteutus}
+
+Kun Llama 3:sta käytetään VertexAI:n tarjoaman kirjaston kautta, tukee se
+samoja toimintoja, kuin mitä on käytetty Geminin toteutuksessa. Toteutus
+saadaan tällöin tehtyä samanlaisena kuin Geminillä kohdassa
+\ref{lst:GeminiService.java}.
+
+Kielimallille annettava ohjeistus eroaa kuitenkin siitä, mitä Geminille
+annetaan. Ohjeistus saadaan luotua vastaavasti kuin Geminille kohdassa
+\ref{lst:GeminiService.java::createInitializeContent}, mutta ohjeistuksena
+annettava teksti on liitteessä \ref{ch:llama3-guide}. Ohjeistus on vastaava
+kuin PaLM2:lla, mutta kielimallille tuli erikseen sanoa, että tulosteessa ei
+saa olla muuta kuin JSON-vastaus, jotta kielimalli jätti ylimääräisen
+tulosteen pois ja tuotti vain halutun tuloksen.
 
 \subsection{xAI:n toteutus}
 
@@ -275,3 +479,5 @@ public List<StoryLine> continueStoryLines(Story story) {
     // palautetaan uudet rivit
 }
 \end{lstlisting}
+
+\section{Kielimallien toimivuuden arviointia}
