@@ -481,3 +481,162 @@ public List<StoryLine> continueStoryLines(Story story) {
 \end{lstlisting}
 
 \section{Kielimallien toimivuuden arviointia}
+
+Lopputuloksen ollessa tarina, jota mahdollisesti voidaan hyödyntää
+ohjelmanumeroiden kehittämisessä, on sen varsinaisen tulosteen laadun arviointi
+hankalaa. Työ on kuitenkin keskittynyt enemmän siihen, miten yksinkertaisesti,
+helposti, nopeasti ja edullisesti saadaan toteutettua haluttu toiminnallisuus
+ilman ylimääräistä työtä ja hienosäätöä. Tällöin arvioinnin kannalta oleellista
+onkin se, että toimiko ratkaisu ylipäätänsä jotenkin.
+
+Vuoden 2025 alkupuolella sovellukseen integroiduista kielimalleista ainoastaan
+Gemini ja Llama3 olivat enää toiminnassa, joten toimivuuden arvioinnissa
+käytettiin vain näitä kielimalleja. Suurin syy muiden kielimallien
+toimimattomuuden oli rajapintojen kielteiset vastaukset puuttuvien krediittien
+takia.
+
+Arvointi toteutettiin yksinkertaisella testillä, jossa luotiin kuusi syötettä,
+jotka annettiin jokaiselle kielimallille 5 kertaa ja yritettiin jokaisella
+kerralla jatkaa tarinaa 5 kertaa. Annettuja syötteitä olivat seuraavat:
+
+\begin{quotation}
+    \noindent Kerro tarina opiskelijoista kouluruokailussa
+
+    \noindent Kerro tarina kavereista matkalla elokuviin
+
+    \noindent Kerro tarina opiskelijabileistä
+
+    \noindent Kerro tarina työkavereista viettämässä pikkujouluja
+
+    \noindent Kerro tarina jalkapallojoukkueesta matkalla kisoihin
+
+    \noindent Kerro tarina leiriläisistä riparilla
+\end{quotation}
+
+Onnistuneet tarinan generoinnin määrät ovat nähtävissä graaffissa
+\ref{chart:story-start}. Onnistumiseksi laskettiin se, että tarinaan saatiin
+tuotettuja rivejä, kun puolestaan epäonnistumiseksi se, että käyttöliittymä
+näytti virheilmoituksen. Teoriassa käyttöliittymä voisi näyttää virhetilanteita
+muitakin kuin kielimallien integraatiosta liittyvistä syistä, kuten verkko-
+ongelmista, mutta testin aikana tällaisia virheitä ei havaittu.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            ybar,
+            bar width=0.8cm,
+            width=\textwidth,
+            height=.5\textwidth,
+            title={Onnistuneet tarinan generoinnit},
+            symbolic x coords={S1, S2, S3, S4, S5, S6},
+            legend style={at={(0.7,-0.2)}},
+            axis y line=none,
+            axis x line=bottom,
+            nodes near coords,
+            enlargelimits=0.1,
+            xtick=data,
+            enlarge x limits=auto,
+        ]
+        \addplot+ coordinates {(S1, 4) (S2, 2) (S3, 3) (S4, 2) (S5, 0) (S6, 2)};
+        \addplot+ coordinates {(S1, 5) (S2, 5) (S3, 5) (S4, 5) (S5, 5) (S6, 5)};
+        \legend{gemini-1.0-pro,llama3-405b-instruct-maas}
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Onnistuneiden tarinan generointien määrät annettua syötettä kohden}
+    \label{chart:story-start}
+\end{figure}
+
+Taulukon \ref{chart:story-start} tuloksista huomataan, että Llama3 onnistui
+joka kerta generoimaan tarinan kun Geminin onnistuminen vaihteli huomattavasti.
+Järjestelmän logien karkean läpikäynti paljasta pääasialliseksi ongelmaksi
+Geminin kanssa sen, että syötteessä oli jotain muuta kuin haluttu JSON-
+muotoinen vastaus. Osan kerroista pyyntö oli markdowia, osan puolestaan katkesi
+kesken kaiken. Molemmat ovat tilanteita, jotka olisi mahdollista korjata melko
+yksinkertaisesti tuloksen kesittelyyn, jolloin Gemini voisi päästä lähelle tai
+jopa täysin samoihin tuloksiin kuin Llama3.
+
+Sekä Gemini, että Llama3 tukivat molemmat tarinan jatkamista, joten tarinoita
+yritettiin jatkaa tarinan luonnin jälkeen 5 kertaa. Näistä laskettiin
+onnistuneet kerrat. Mikäli tarinan luonti epäonnistui jo alunperin, tarkoitti
+se tarinan jatkamisen kannalta suoraan sitä, että tarinan jatkaminen onnistui
+0 kertaa. Käyttöliittymä mahdollista virheen jälkeen sen, että tarinaa
+yritettäisiin yhä jatkaa. Tätä ei kuitenkaan tehty sillä kielimallin kanssa
+käyty keskustelu sisälsi tällöin virhetilanteessakin luodun osan, joka ei
+näkynyt käyttäjälle, mutta oli kielimallille tiedossa, joten tarinan
+yhtenäisyys kärsi jokaisesta virheestä. Määrät onnistuneista tarinan
+jatkamisista ovat nähtävissä graaffissa \ref{chart:story-continue}. Tarinan
+jatkamisessa Geminin kohdanneet ongelmat olivat vastaavia kuin tarinan
+luonnissa.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            ybar,
+            bar width=0.8cm,
+            width=\textwidth,
+            height=.5\textwidth,
+            title={Onnistuneet tarinan jatkamiset},
+            symbolic x coords={S1, S2, S3, S4, S5, S6},
+            legend style={at={(0.7,-0.2)}},
+            axis y line=none,
+            axis x line=bottom,
+            nodes near coords,
+            xtick=data,
+            enlarge x limits=auto,
+        ]
+        \addplot+ coordinates {(S1, 9) (S2, 6) (S3, 7) (S4, 10) (S5, 0) (S6, 4)};
+        \addplot+ coordinates {(S1, 25) (S2, 25) (S3, 25) (S4, 25) (S5, 25) (S6, 25)};
+        \legend{gemini-1.0-pro,llama3-405b-instruct-maas}
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Onnistuneiden tarinan jatkamisien määrät aiemmin annettujen syötteiden pohjalta luoduille tarinoille}
+    \label{chart:story-continue}
+\end{figure}
+
+Jokaiselle onnistuneelle tarinan generoinnille laskettiin rivimäärä, joka
+sisältää sekä vuorosanat että toiminnan. Graaffista \ref{chart:story-lines} on
+nähtävissä keskimääräiset määrät tuotetuille riveille.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            ybar,
+            bar width=0.8cm,
+            width=\textwidth,
+            height=.5\textwidth,
+            title={Keskimäärin tuotetut rivit},
+            symbolic x coords={S1, S2, S3, S4, S5, S6},
+            legend style={at={(0.7,-0.2)}},
+            axis y line=none,
+            axis x line=bottom,
+            nodes near coords,
+            xtick=data,
+            enlarge x limits=auto,
+        ]
+        \addplot+ coordinates {(S1, 20.66) (S2, 41.6) (S3, 29.33) (S4, 30) (S5, 0) (S6, 34)};
+        \addplot+ coordinates {(S1, 11.88) (S2, 13.88) (S3, 12.52) (S4, 12.28) (S5, 13.24) (S6, 15.36)};
+        \legend{gemini-1.0-pro,llama3-405b-instruct-maas}
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Keskimäärin tuotettujen rivien määrä onnistuneissa pyynnöissä}
+    \label{chart:story-lines}
+\end{figure}
+
+Testien tuloksien pohjalta Llama3 vaikutti suorituvan tasaisen varmasti tarinan
+generoinnista, mutta Gemini puolestaan sai tuotettua enemmän tarinaa yhdellä
+kertaa. Testaamisen yhteydessä lisäksi Llama3 toimi erittäin hitaasti
+verrattuna Gemininiin. Tätä ei kuitenkaan mitattu vaan pohjautuu puhtaasti
+testin tekijän käsitykseen tilanteesta. Geminin toimintaa testattiin myös lähes
+vuosi aiemmin isosten toimesta sovellusken julkaisuhetkellä. Tuolloin isoset
+eivät tuoneet esille läheskään yhtä isoa määrää virhetilanteita kuin mitä
+varsinaisessa testissä tuli. Tällöin kuitenkin lähinnä keskityttiin yleiseen
+mielipiteeseen ja isoimpiin puutteisiin sekä ohjelmistovirheisiin joita tuli
+esille sovelluksessa itsessään, eikä tuolta ajalta ole statistiikkaa, jota
+voisi verrata tuoreempiin mittauksiin.
+
+Mittaustulosten käsittelyhetkellä Geministä oli saatavilla huomattavasti
+uudempi ja kyvykkäämpi malli, joka olisi voinut olla mahdollisesti
+tasapuolisempi vertailuun Llama3:n isoimman mallin kanssa. \parencite{gemini2}
