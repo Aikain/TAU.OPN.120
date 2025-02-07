@@ -40,10 +40,10 @@ käyttää Vertex AI -alustan kautta.
 
 Vertex AI -alustan käyttöön on tarjolla kirjastoja useille eri
 ohjelmointikielille \parencite{vertexAiGenerativeAiQuickstart}. Luvussa
-\ref{ch:sovellus} esitellyn sovelluksen backend on toteutettu javalla ja
-pakettimanagerina on maven, joten Vertex AI:n javalle tekemän kirjasto saadaan
-käyttöön lisäämällä pom.xml-tiedostoon esimerkin \ref{lst:vertexai-pom.xml}
-mukaisesti.
+\ref{ch:sovellus} esitellyn sovelluksen taustajärjestelmä on toteutettu Javalla
+ja pakettimanagerina on maven, joten Vertex AI:n Javalle tekemän kirjasto
+saadaan käyttöön lisäämällä pom.xml-tiedostoon esimerkin
+\ref{lst:vertexai-pom.xml} mukaisesti.
 
 \begin{lstlisting}[
     basicstyle=\small,
@@ -98,9 +98,9 @@ public class AIConfig {
 }
 \end{lstlisting}
 
-Konfiguraation jälkeen voidaan toteuttaa varsinaisen Servicen, jossa
-Kielimallia käytetään. Esimerkki tällaisesta Servicestä on esitelty
-kohdassa \ref{lst:GeminiServiceExample.java}.
+Konfiguraation jälkeen voidaan toteuttaa varsinainen Service, jossa kielimallia
+käytetään. Esimerkki tällaisesta Servicestä on esitelty kohdassa
+\ref{lst:GeminiServiceExample.java}.
 
 \begin{lstlisting}[
     basicstyle=\small,
@@ -139,7 +139,7 @@ public class GeminiService {
         GenerateContentResponse response =
             chatSession.sendMessage("Kerro vitsi");
 
-        // Tulostetaan kielimallin vastus
+        // Tulostetaan kielimallin vastaus
         System.out.println(response
             .getCandidates(0).getContent()
             .getParts(0).getText());
@@ -302,9 +302,9 @@ suunniteltu täydentämään koodia \parencite{llamaOtherModels}.
 \subsection{Käyttö}
 
 Vertex AI:n Model Gardenissa on ollut 23.07.2024 alkaen tarjolla Llama 3.1:sta
-API Service, joka mahdollistaa Llama 3.1:n käyttämisen vastaavasta kuin
-Geminin. Tämän ansiosta mallia ei tarvitse itse pystyttää, jolle laskutus olisi
-tuntipohjainen vaan laskutus tapahtuu käytettyjen tokenien mukaan.
+API Service, joka mahdollistaa Llama 3.1:n käyttämisen vastaavasti kuin
+Geminin. Tämän ansiosta mallia ei tarvitse itse laittaa ajoon, jolloin laskutus
+olisi tuntipohjainen vaan laskutus tapahtuu käytettyjen tokenien mukaan.
 \parencite{vertexAiModelGardenLlama3}
 
 Vertex AI:n SDK tukee valmiiksi useita eri modeleita, myös muita kuin Geminin
@@ -642,14 +642,14 @@ public class GrokService {
 \subsection{Hinnoittelu}
 
 XAI:n rajapinnan hinnoittelua ei ole avattu julkisilla sivuilla, mutta
-rekisteröitymällä osaksi uuden rajapinnan julkaista beta ohjelmaa pääsee
-näkemään eri mallien hinnoittelut ja rajoitukset. Nämä hinnat on koottu
-taulukkoon \ref{tab:grok-prices} joulukuussa 2024.
+rekisteröitymällä osaksi uuden rajapinnan julkista betaohjelmaa pääsee näkemään
+eri mallien hinnoittelut ja rajoitukset. Nämä hinnat on koottu taulukkoon
+\ref{tab:grok-prices} joulukuussa 2024.
 
 \begin{table}[H]
     \centering
     \rowcolors{2}{gray!25}{white}
-    \caption{xAI:n tarjomien kielimallien hinnat}
+    \caption{xAI:n tarjomien kielimallien hinnat joulukuussa 2024}
     \label{tab:grok-prices}
     \begin{tabular}{llcc}
         \textbf{Malli} & \textbf{Syöttö (teksti)} & \textbf{Syöttö (kuva)} & \textbf{Ulostulo} \\

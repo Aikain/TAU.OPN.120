@@ -28,20 +28,21 @@ käytäviin nuorteniltoihin sekä ovat avustamassa jumalanpalveluksissa sekä
 opetuspäivissä. Nämä ovat yksittäisiä pienempiä asioita, jotka saadaan
 yleensä järjestettyä pienemmällä määrällä. Varsinaisella leirillä kuitenkin
 tahti on toisenlainen. Parin tunnin ohjelman sijaan leiriläisille luodaan koko
-leirin ajaksi ohjelma, joka sisältää toimintaa heräämisestä hiljaisuuteen asti.
-Tähän tiiviiseen ohjelmaan pakataan kaikki asiat, joita rippikoululla käydään
-läpi. Ohjelmarunko ja opetus on suunniteltu etukäteen, mutta elää tilanteen
-mukaan ja harvemmin pysyy alkuperäisessä edes yhtä kokonaista päivää. Ohjelman
-ollessa tiivis ja muutosten tullessa tilanteen tarvittaessa erittäin lyhyellä
-varoitusajalla ja rippikoulutiimin koostuessa yleensä noin neljästä aikuisesta,
-kymmenestä isosesta sekä vierailijoista, kuten kanttorista ja diakonissasta,
-on tärkeää, että kaikki ovat ajantasalla milloin mitäkin tapahtuu. Ruokolahden
-seurakunnalla tähän käytettiin pitkään ensisijaisesti ja ainuana keinona yhtä
-ryhmäkeskustelua, johon kuuluivat kaikki, jotka olivat läsnä leirillä. Leirin
-ollessa viikon mittainen, oli viimeisinä päivinä viestien määrä tuhansissa ja
-mediaa, kuten kuvia ja pdf:iä, useita satoja. Tällöin sisällön etsintä muuttui
-yhä hankalammaksi viikkoa loppuun mennessä ja tiedotetut muutokset olivat
-pitkälti muistin varassa.
+leirin ajaksi ohjelma, joka sisältää joka päivä toimintaa heräämisestä
+hiljaisuuteen asti. Tähän tiiviiseen ohjelmaan pakataan kaikki asiat, joita
+rippikoululla käydään läpi. Ohjelmarunko ja opetus on suunniteltu etukäteen,
+mutta elää tilanteen mukaan ja harvemmin pysyy alkuperäisessä edes yhtä
+kokonaista päivää. Ohjelman ollessa tiivis ja muutosten tullessa tilanteen
+tarvittaessa erittäin lyhyellä varoitusajalla ja rippikoulutiimin koostuessa
+yleensä noin neljästä aikuisesta, kymmenestä isosesta sekä vierailijoista,
+kuten kanttorista ja diakonissasta, on tärkeää, että kaikki ovat ajantasalla
+milloin mitäkin tapahtuu. Ruokolahden seurakunnalla tähän käytettiin pitkään
+ensisijaisesti ja ainoana keinona yhtä WhatsApp-ryhmäkeskustelua, johon
+kuuluivat lähes kaikki, jotka olivat läsnä leirillä. Leirin ollessa viikon
+mittainen, oli viimeisinä päivinä viestien määrä tuhansissa ja mediaa, kuten
+kuvia ja pdf:iä, useita satoja. Tällöin sisällön etsintä muuttui yhä
+hankalammaksi viikkoa loppuun mennessä ja tiedotetut muutokset olivat pitkälti
+muistin varassa.
 
 Tämän työn ohessa on luotu sovellus, joka pyrkii tuomaan helpostusta edellä
 kuvattuun tilanteeseen ja keventämään erityisten isosten työkuormaa, mutta
@@ -55,7 +56,7 @@ käytössä.
 Sovelluksesta löytyy kuvan \ref{fig:isosapp-leirit} mukaisesti kaikki leirit ja
 leirien osallistujat, niin ohjaajat, isoset kuin leiriläisetkin. Leirillä
 leiriläiset jaetaan leirillä isosryhmiin, jotka saadaan näkyviin leirin
-päänykmään kuvassa \ref{fig:isosapp-ryhmat}.
+päänäkymään kuvassa \ref{fig:isosapp-ryhmat}.
 
 \begin{figure}[h!]
     \centering
@@ -143,13 +144,13 @@ kuvan \ref{fig:isosapp-tyokalut-tarinan-generointi-1} mukaisesti.
 Käyttöliittymä osaa näyttää tarinan vuorosanat sekä toiminnot, kuten kuvassa
 \ref{fig:isosapp-tyokalut-tarinan-generointi-2} nähdään. Käyttöliittymä tukee
 myös tarinan jatkamista mikäli vain valittulle kielimmallille on toteutettu
-kyseinen toiminnallisuus backendin puolelle.
+kyseinen toiminnallisuus taustajärjestelmän puolelle.
 
 Työkalun lähtökohtana ollut päästä testaamaan useampaa eri kielimallia, joten
 toteutuksesta on pyritty tekemään mahdollisimman joustava useammalla eri
 kielimallille. Jokaisen kielimallin toteutuksen tulee toteuttaa
 \ref{lst:StoryLineService.java} interfacen kaikki metodit, jotta kielimallia
-saadaan käytettyä olemassa olevan käyttöliittymän kanssa. Metodit heittää
+saadaan käytettyä olemassa olevan käyttöliittymän kanssa. Metodit heittävät
 poikkeuksen, mikäli suoritus ei onnistunut, jolloin käyttöliittymä näyttää
 virheen ja mahdollistaa uudelleen yrittämisen.
 
@@ -516,9 +517,9 @@ kerralla jatkaa tarinaa 5 kertaa. Annettuja syötteitä olivat seuraavat:
 Onnistuneet tarinan generoinnin määrät ovat nähtävissä graaffissa
 \ref{chart:story-start}. Onnistumiseksi laskettiin se, että tarinaan saatiin
 tuotettuja rivejä, kun puolestaan epäonnistumiseksi se, että käyttöliittymä
-näytti virheilmoituksen. Teoriassa käyttöliittymä voisi näyttää virhetilanteita
-muitakin kuin kielimallien integraatiosta liittyvistä syistä, kuten verkko-
-ongelmista, mutta testin aikana tällaisia virheitä ei havaittu.
+näytti virheilmoituksen. Teoriassa käyttöliittymä voisi näyttää muitakin
+virhetilanteita kuin kielimallien integraatiossa tapahtuvia virheitä, kuten
+verkko-ongelmista, mutta testin aikana tällaisia virheitä ei havaittu.
 
 \begin{figure}[H]
     \centering
@@ -553,7 +554,7 @@ Järjestelmän logien karkean läpikäynti paljasta pääasialliseksi ongelmaksi
 Geminin kanssa sen, että syötteessä oli jotain muuta kuin haluttu JSON-
 muotoinen vastaus. Osan kerroista pyyntö oli markdowia, osan puolestaan katkesi
 kesken kaiken. Molemmat ovat tilanteita, jotka olisi mahdollista korjata melko
-yksinkertaisesti tuloksen kesittelyyn, jolloin Gemini voisi päästä lähelle tai
+yksinkertaisesti tuloksen käsittelyyn, jolloin Gemini voisi päästä lähelle tai
 jopa täysin samoihin tuloksiin kuin Llama3.
 
 Sekä Gemini, että Llama3 tukivat molemmat tarinan jatkamista, joten tarinoita

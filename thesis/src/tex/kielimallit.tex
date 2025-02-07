@@ -15,20 +15,20 @@ ja palvelut voivat toimia tehtävän ja tilanteen mukaisesti järkevällä taval
 Yhtenä keinoa toteuttaa tekoälyä voidaan käyttää kielimalleja. Kielimallit on
 yleensä koulutettu ymmärtämään ja tuottamaan luonnollista kieltä. Tänä päivänä
 paljon esillä olevat kielimallit ovat niin sanottuja suuria kielimalleja,
-joiden koulutus on pohjautunut merkittävän suureen aineistoon. Ainoiston avulla
+joiden koulutus on pohjautunut merkittävän suureen aineistoon. Aineiston avulla
 kielimallia voidaan opettaa ennustamaan, mitä sanoja tai lauseita aineistoin
 mukaan annettaisiin vastauksena.
 
 \section{Suuret kielimallit}
 
 Suuret kielimallit tulivat tunnetuiksi suurelle osalle OpenAI:n marraskuussa
-2022 julkaiseman ChatGPT-palvelun myötä tunnetuiksi
-\parencite{alma9911564814005973}. Monille voikin tämän myötä jäädä kuva, että
-kielimalleilta voi kysyä jotain ja ne tuottavat tekstiä vastauksena. Tätä monet
-niistä tekevätkin, mutta tää päivänä käyttötarkoituksia on keksitty useita.
-Perinteisen tekstin tuottamisen lisäksi kielimalleja käytetään mm. kuvan,
-äänen ja videon tuottamiseen. Kielimalleja on yhdistelty ja ne voivatkin
-ymmärtää useita eri syötteitä ja tuottaa tuloksia sen mukaan.
+2022 julkaiseman ChatGPT-palvelun myötä \parencite{alma9911564814005973}.
+Monille voikin tämän myötä jäädä kuva, että kielimalleilta voi kysyä jotain ja
+ne tuottavat tekstiä vastauksena. Tätä monet niistä tekevätkin, mutta tänä
+päivänä käyttötarkoituksia on keksitty useita. Perinteisen tekstin tuottamisen
+lisäksi kielimalleja käytetään mm. kuvan, äänen ja videon tuottamiseen.
+Kielimalleja on yhdistelty ja ne voivatkin ymmärtää useita eri syötteitä ja
+tuottaa tuloksia sen mukaan.
 
 Kielimalleilla on kuitenkin haasteita, joihin ne eivät kykene. Näitä ovat muun
 muuassa kielen syvällisempien merkitysten ja ihmisten monimutkaisten
@@ -36,8 +36,9 @@ kommunikaatiomuotojen ymmärtäminen. Kielimallit eivät kykene abstraktiin
 ajatteluun, tunteiden ymmärtämiseen tai syvälliseen kontekstuaaliseen
 analyysiin. \parencite{haukkaJimiKuinkakielimallitOppivat}. Yksi sosiaalisessa
 mediassa levinnyt esimerkki on hyvinkin yksinkertainen kysymys: "Kuinka monta
-R-kirjainta on sanassa 'strawberry'?" \parencite{alberttechStrawberry}, jonka
-juurisyy pohjautuu kielimallien tapaan käsitellä annettua syötettä.
+R-kirjainta on sanassa 'strawberry'?", johon moni kielimalli vastaa
+virheellisesti kaksi \parencite{alberttechStrawberry}, jonka juurisyy pohjautuu
+kielimallien tapaan käsitellä annettua syötettä.
 
 Kielimallien antamassa tulosteessa voi olla virheitä useista syistä.
 Koulutusaineistossa voi olla vinoumia, jonka myötä kielimalli voi tehdä
@@ -136,9 +137,9 @@ versio on onnistunut paremmin ja sen myötä laskettu ns. voittosuhde. Näissä
 suorituskykytestien määrä on vaihdellut ääniihin liittvien suorituskykytestien
 viidestä aina tekstien 24 testiin ja keskeisten ominaisuuksien 50 testiin.
 Määrät vaihtelevat myös riippuen minkä mallien välillä vertailua on tehty.
-Helmikuun ja toukokuun mallien välisiä eroja on myös tarkemmin eroteltu
-koostamalla kymmenkunta eri suorituskykytestiä ja testien antamia pisteitä
-verrattu toisiinsa. \parencite{googleDeepmindGeminiv1_5report}
+Vuoden 2024 helmikuun ja toukokuun mallien välisiä eroja on myös tarkemmin
+eroteltu koostamalla kymmenkunta eri suorituskykytestiä ja testien antamia
+pisteitä verrattu toisiinsa. \parencite{googleDeepmindGeminiv1_5report}
 
 Geminin kohdalla on myös laskettu tehokkuutta mittaamalla sitä, minkä verran
 kuluu keskimäärin aikaa yksittäiseen merkin tuottamiseen vastauksessa. Testissä
@@ -147,8 +148,8 @@ on tehty käyttämällä Vertex AI:n ja OpenAI:n tarjoamia rajapintoja vertailte
 malleille. \parencite{googleDeepmindGeminiv1_5report} Tällä testillä on saatu
 näkyviin niin sanottua raakaa dataa suorituskyvystä, mutta ottamatta kantaa
 tuloksen varsiseen laatuun ja siten mallin suoriutumiseen. Vastaavia testejä
-näkyykin huomattavasti vähemmän sillä ne eivät välttämättä yksinään kerra
-malleista mitään.
+näkyykin huomattavasti vähemmän sillä ne eivät välttämättä yksinään kerro
+mallien suoriutumisesta todelista kuvaa.
 
 Yksi Gemini 1.5:n merkittävimmistä asioista vaikuttaisi olevan Googlen
 esityksen \parencite{googleKeynote2024} perusteella mahdollisuus merkittävästi
@@ -185,21 +186,22 @@ Suorituskykytestejä on eri kielimallien raportonneissa
 \parencite{openAIGPT4o} \parencite{googleDeepmindGeminiv1_5report} käytetty
 lukuisia, mutta eniten esille tulevat MMMU, GPQA, MATH, HumanEval, MGSM ja
 DROP, jotka ovat esitelty jokaisen tutkitun kielimallien suorituskyvyn
-raportoinnissa. Näiden lisäksi on useita monet suorityskykytestit esiintyvät
-useille eri malleilla. MMMU on suorituskykytesti, joka on suunniteltu
+raportoinnissa. Näiden lisäksi on useita eri suorityskykytestit, joista monet
+tulevat esille useilla eri malleilla, vaikkeivat oletkaan esillä ihan
+jokaisella mallilla. MMMU on suorituskykytesti, joka on suunniteltu
 multimodaalisten mallien arviointiin massiivisiin, monialaisiin tehtäviin,
 jotka vaativat korkeakoulutasoista tuntemusta ja päättelykykyä
 \parencite{benchmarkMMMU}. GPQA on puolestaan kooste 448:sta haastavasta
 monivalinta kysymyksestä biologian, fysiikan ja kemian alalla, johon tohtorin
 tutkintoa tekevät saavat kaksi kolmasosaa oikein \parencite{benchmarkGPQA}.
 Matemaattista ongelmanratkaisua mittaamaan on tehty MATH suorituskykyteksti,
-jossa on 12 500 hasstavaa kilpamatematiikan ongelmaa, jotka sisältävät
+jossa on 12 500 haastavaa kilpamatematiikan ongelmaa, jotka sisältävät
 kattavan vaihettaisin ratkaisun, jotta kielimallien kykyä johdatteluun ja
 selittävään vastaukseen voidaan myös parantaa \parencite{benchmarkMATH}.
 HumanEval \parencite{benchmarkHumanEval} on arviointoisarja, joka sisältää
-164 käsinkirjoitettuja ohjelmointi ongelmaa. MSGM suorituskykytesti
-pohjautuu 250 peruskoulutason matematiikan ongelmaan \parencite{benchmarkMSGM}.
-DROP puolestaan on 96 000 kysymystä sisältävä testi englanninkielen
+164 käsinkirjoitettuja ohjelmointiongelmaa. MSGM suorituskykytesti pohjautuu
+250 peruskoulutason matematiikan ongelmaan \parencite{benchmarkMSGM}. DROP
+puolestaan on 96 000 kysymystä sisältävä testi englanninkielen
 luetunymmärtämiselle, jotka pyrkii tuomaan haastetta sijoittelemalla
 tarvittava tieto useisiin kohteisiin, joista on kyettävä yhdistelemään
 lopullinen vastaus.
@@ -210,7 +212,7 @@ ovat useasti joko kielimallin koko tai käytetyn koulutusmateriaalin koko.
 Kielimallien koosta puhuessa puhutaan parametreistä ja koulutusmateriaalin
 kanssa tokeneista \parencite{kaplan2020scalinglawsneurallanguage}.
 
-\section{Historia \& tulevaisuus}
+\section{Historia}
 
 Tekoälyn historia alkaa 1950-luvun tienoilta, jolloin tänä päivänä tuntemamme
 tietotekniikka oli vasta ihan alullaan. Ensimmäiset tekoälynratkaisut
