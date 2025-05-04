@@ -6,15 +6,15 @@ kielimallista voi löytyä useita variaatioita. 2025 tammikuussa hakemalla
 HuggingFacesta malleja rajoituksella "Text Generation", saadaan tuloksia lähes
 170 000. Tässä työssä on tuotu esille joitain jossain määrin tunnetuimmista
 kielimalleista isoimmilta tekijöiltä. Kielimallien tunnettavuutta korostaa muun
-muassa se, että kielimalliet esiintyvät toisten isojen kielimallien sivuilla ja
+muassa se, että kielimallit esiintyvät toisten isojen kielimallien sivuilla ja
 raporteissa vertailussa.
 
-Varsinaisen toteutuksen kannalta rajoituksina on ensisijaisesti hinta. Koska
+Varsinaisen toteutuksen kannalta rajoituksena on ensisijaisesti hinta. Koska
 mallien toimintaa on tarkoitus vain testata, eikä ottaa pysyvään käyttöön, on
-lähtökohtaisesti käytön mukaan hinnoiteltu hinnoittelu parempi. Tärkeänä
-kriteerinä on myös se, että kielimallia on mahdollista saada käyttöön
-kohtuullisille määrällä työtä. Näiden kriteerien myötä valituista kielimalleista
-on esitelty kielimallien perustiedot, toteutustapa sovellukseen ja hinnoittelu.
+lähtökohtaisesti käytön mukainen hinnoittelu parempi. Tärkeänä kriteerinä on
+myös se, että kielimallia on mahdollista saada käyttöön kohtuullisilla määrällä
+työtä. Näiden kriteerien myötä valituista kielimalleista on esitelty
+kielimallien perustiedot, toteutustapa sovellukseen ja hinnoittelu.
 
 \section{Google Gemini}
 
@@ -291,8 +291,8 @@ Llama on Meta AI:n 2023 helmikuussa esittelemä kokoelma kielimalleja
 \parencite{llama2}, Llama 3 huhtikuussa 2024 \parencite{llama3} ja 3.1
 heinäkuussa 2024 \parencite{llama31}. Uusimmasta versiosta 3.1 on olemassa
 kolme erikokoista mallia, jotka on tarkoitettu kukin itselleen sopivaan
-tarkoitukseen, 8B toimimaan kevyenä ja nopeana, 70B hinta/laatu suhteeltaan
-parhaalta ja 405B toimimaan kaikista parhaiten vaihtelevissa tilanteissa
+tarkoitukseen, 8B toimimaan kevyenä ja nopeana, 70B hinta-/laatusuhteeltaan
+parhaimmalta ja 405B toimimaan kaikista parhaiten vaihtelevissa tilanteissa
 \parencite{llama}. Näiden lisäksi on julkaistu useita versioita muita malleja,
 jotka on suunniteltu tiettyyn käyttötarkoitukseen kuten Llama Guard, joka
 pyrkii luokittelemaan sisältöä ja määrittelemään kehotteiden ja vastausten
@@ -307,17 +307,17 @@ Geminin. Tämän ansiosta mallia ei tarvitse itse laittaa ajoon, jolloin laskutu
 olisi tuntipohjainen vaan laskutus tapahtuu käytettyjen tokenien mukaan.
 \parencite{vertexAiModelGardenLlama3}
 
-Vertex AI:n SDK tukee valmiiksi useita eri modeleita, myös muita kuin Geminin
+Vertex AI:n SDK tukee valmiiksi useita eri malleja, myös muita kuin Geminin
 eri variaatioita, joten toteutus voi olla käytännössä täysin sama kuin aiemmin
-esiltelty toteutus Geminin kanssa kohdassa \ref{lst:GeminiServiceExample.java}.
-Luomalla oman servicen saadaan kuitenkin mukautettua sisällössä annettava ohje
-sekä parametrit sopivammaksi Llama 3.1-mallille.
+esitelty toteutus Geminin kanssa kohdassa \ref{lst:GeminiServiceExample.java}.
+Luomalla uuden Servicen saadaan kuitenkin mukautettua sisällössä annettava ohje
+sekä parametrit sopimaan paremmin Llama 3.1-mallille.
 
 \subsection{Hinnoittelu}
 
-Useat kolmannet osapuolet tarjoavat rajapinnan, jonka kautta mallia on
-mahdollista käyttää ja hinnoittelu pohjautuu tokenien määrään. Halvin
-ilmoitettu hinnat ja tarjoajat näkyvät taulukossa
+Useat kolmannet osapuolet tarjoavat rajapintoja, joiden kautta mallia on
+mahdollista käyttää ja hinnoittelu pohjautuu tokenien määrään. Halvimmat
+ilmoitetut hinnat ja tarjoajat näkyvät taulukossa
 \ref{tab:third-party-llama-prices}. Keskimääräiset hinnat esitellyille
 kolmansille osapuolille ovat taulukossa \ref{tab:third-party-llama-prices-2}.
 Kolmansia osapuolia ovat AWS, Azure, Databricks, Fireworks.ai, IBM, Octo.ai,
@@ -389,7 +389,7 @@ Vertex AI:n kautta. \parencite{anthropicAPIDocs}
 \subsection{Käyttö}
 \label{ch:claude-usage}
 
-Anthropic tarjoaa vain python kirjastoja Clauden käyttöön, joten sovellukseen
+Anthropic tarjoaa vain Python-kirjastoja Clauden käyttöön, joten sovellukseen
 integrointi tehdään kutsuen suoraan saatavilla olevaa rajapintaa. Yksi
 yksinkertainen vaihtoehto on käyttää openfeign:iä, joka saadaan käyttöön
 lisäämällä `pom.xml`:n riippuvuuksiin \ref{lst:openfeign-pom.xml} mukainen
@@ -514,11 +514,11 @@ API:n hinnat on esitetty taulukossa \ref{tab:anthropic-api-pricing}
   \end{tabular}
 \end{table}
 
-Clauden ilmainen tilaus sisältää vain Claude 3.5 Sonnetin käyttämisen web-
-käyttöliittymän sekä sovellusten kautta. Pro-tilaus lisää mahdollisuuden
+Clauden ilmainen tilaus sisältää vain Claude 3.5 Sonnetin käyttämisen
+web-käyttöliittymän sekä sovellusten kautta. Pro-tilaus lisää mahdollisuuden
 käyttää Opus- ja Haiku-malleja sekä joitain QoL-lisäyksiä ja suurempaa
 prioriteettia käyttäjälle. Team-tilaus on lähinnä tiimin hallinnan ja maksun
-kannalta oleellisia lisätoiminnallisuuksia. Pro-tilaus lisää viisin kertaisen
+kannalta oleellisia lisätoiminnallisuuksia. Pro-tilaus lisää viisinkertaisen
 käyttörajan verrattuna ilmaiseen ja Team-tilaus sitäkin suuremman.
 \parencite{anthropicPricing} \parencite{claudePricing} Selviä käyttörajoja ei
 ole saatavilla.
@@ -526,14 +526,14 @@ ole saatavilla.
 \section{xAI}
 
 XAi on Elon Muskin johtama tekoälyritys, joka on luonut Grok-kielimallin
-\parencite{xAIAbout}. Grok kielimallin on epäilty olevan vain yksi kielimalli
+\parencite{xAIAbout}. Grok-kielimallin on epäilty olevan vain yksi kielimalli
 lisää muiden joukossa \parencite{fireshipElonsGrokAI}, jonka perustamisen
 taustalla vaikuttaa olevan ennemminkin huumoriset päähänpistokset
 \parencite{twitter1679182035645235200} ja erimielisyydet ja oikeusjutut
 muun muassa OpenAI:n kanssa, jonka perustajistoon Elon Musk kuuluu
 \parencite{fireshipElonsLawsuitAgainstOpenAI}.
 
-Marraskuussa 2024 Grok kielimallille avattiin rajapinta, jota kehittäjät
+Marraskuussa 2024 Grok-kielimallille avattiin rajapinta, jota kehittäjät
 pääsevät kokeilemaan vähintään vuoden 2024 loppuun asti. Jokaiselle
 rekisteröityneelle annetaan ilmaista kredittiä 25 dollarin verran
 kuukaudessa. Rajapinta on toteuttu yhteensopivaksi OpenAI:n ja Anthropicin
@@ -543,7 +543,7 @@ erittäin helpon vaihtamisen käyttämään xAI:n rajapintaa. \parencite{xAIBlog
 \subsection{Käyttö}
 
 Dokumentaatiossa luetellut integraatiot pohjautuvat olemassa oleviin OpenAI:n
-ja Anthropic SDK:oihin, jotka on toteutettu JavaScriptille ja Pythonille
+ja Anthropic SDK:hin, jotka on toteutettu JavaScriptille ja Pythonille
 \parencite{xAIDocsIntegrations}. Näiden käyttö ei tällöin onnistu suoraan
 työn ohella tehdyn sovelluksen kanssa, joten toteutus tulee tehdä tarjolla
 olevan REST-rajapinnan kautta, kuten luvussa \ref{ch:claude-usage} tehtiin
@@ -677,7 +677,7 @@ voitaisiin integroida sovellukseen eikä tarjoa käytönmukaista hinnoittelua ta
 vaihtoehtoisesti tarjoa kokeilujaksoa tai -krediittejä. VertexAI:n ansiosta
 saadaan integroitua Gemini, PaLM 2 ja Llama käytännössä yhdellä toteutuksella,
 joten ei ole syytä olla integroimatta niistä jotain kun integroidaan yksikin.
-Sovellukseen tehdään tuki useille kielimalleilla, jotta niitä voidaan kokeilla
+Sovellukseen tehdään tuki useille kielimalleille, jotta niitä voidaan kokeilla
 varsinaisessa käytössä, joten ei ole myöskään syytä olla integroimatta xAI:ta
 osaksi sovellusta. Sovellukseen valittuja kielimalleja ovat siis Gemini,
 PaLM 2, Llama ja xAI. Jokaisesta kielimallista valitaan tekohetkellä
