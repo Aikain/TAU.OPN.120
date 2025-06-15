@@ -23,7 +23,7 @@ Gemini on Googlen julkaisema kielimalliperhe, jonka on seuraaja PaLM 2:lle
 tunnettiin aiemmin nimellä Bard, ennen kuin Google nimesi sen uudelleen
 Geminiksi \parencite{geminiUpdates}. Geministä on useita eri malleja, jotka on
 tarkoitettu eri käyttötilanteisiin. Näitä malleja ovat Ultra, Pro, Flash ja
-Nano. \parencite{googleDeepmindGemini} Näistä Ultra on tarkoitettu
+Nano \parencite{googleDeepmindGemini}. Näistä Ultra on tarkoitettu
 monimutkaisimpiin tehtäviin, Pro optimoitu kustannusten ja viiveen kannalta ja
 Nano puolestaan laitteissa pyöritettäväksi
 \parencite{googleDeepmindGeminiv1report}. Flash puolestaan on entistä
@@ -41,7 +41,7 @@ käyttää Vertex AI -alustan kautta.
 Vertex AI -alustan käyttöön on tarjolla kirjastoja useille eri
 ohjelmointikielille \parencite{vertexAiGenerativeAiQuickstart}. Luvussa
 \ref{ch:sovellus} esitellyn sovelluksen taustajärjestelmä on toteutettu Javalla
-ja pakettimanagerina on maven, joten Vertex AI:n Javalle tekemän kirjasto
+ja pakettimanagerina on maven, joten Vertex AI:n Javalle tekemä kirjasto
 saadaan käyttöön lisäämällä pom.xml-tiedostoon esimerkin
 \ref{lst:vertexai-pom.xml} mukaisesti.
 
@@ -156,9 +156,9 @@ eli kuville \$0.001315 / kuva, videoille \$0.001315 / sekunti, tekstille
 \$0.00125 / 1000 merkkiä ja äänelle \$0.000125 / sekunti. Ulostulo puolestaan
 on 10-kertaa kalliimpi eli \$0.00375 / 1000 merkkiä. Gemini 1.5 Pron hinnat
 kaksinkertaistuvat mikäli käytössä oleva konteksti on yli 128 000. Gemini
-1.5 Flashin hinnat ovat 10\% siitä mitä Gemini 1.5 Pron hinnat ovat.
-\parencite{vertexAiGenerativeAiPricing} Hintoja on havainnollistettu taulukossa
-\ref{tab:vertex-ai-generative-ai-pricing}.
+1.5 Flashin hinnat ovat 10\% siitä mitä Gemini 1.5 Pron hinnat ovat. Hintoja on
+havainnollistettu taulukossa \ref{tab:vertex-ai-generative-ai-pricing}.
+\parencite{vertexAiGenerativeAiPricing}
 
 \begin{table}[H]
   \centering
@@ -186,7 +186,7 @@ toteutettiin muun muassa lääketieteellisellä datalla hienosäädetty Med-PaLM
 \parencite{googleKeynote2023} \parencite{googlePaLM2Introducing}
 
 PaLM 2:n kouluttamiseen käytettiin muun muassa verkkodokumentteja, kirjoija,
-koodia, matematiikkaa ja keskusluita. PaLM 2:n koulutuksessa huomioitiin
+koodia, matematiikkaa ja keskusteluita. PaLM 2:n koulutuksessa huomioitiin
 merkittävästi paremmin useat eri kielet. \parencite{googlePaLM2TechReport}
 
 Sittemmin muun muassa PaLM API on deprekoitu ja kehittäjiä on suositeltu
@@ -196,7 +196,7 @@ mahdollista käyttää 2024 alkukesästä Vertex AI:n kirjastojen avulla.
 
 \subsection{Käyttö}
 
-PaLM 2 käyttäminen onnistuu VertexAi:n kautta vastaavasti kuin Geminin ja
+PaLM 2 käyttäminen onnistuu VertexAi:n kautta vastaavasti kuin Geminin, ja
 tämä on esitelty kohdassa \ref{lst:PaLM2Service.java}.
 
 \begin{lstlisting}[
@@ -304,7 +304,7 @@ suunniteltu täydentämään koodia \parencite{llamaOtherModels}.
 Vertex AI:n Model Gardenissa on ollut 23.07.2024 alkaen tarjolla Llama 3.1:sta
 API Service, joka mahdollistaa Llama 3.1:n käyttämisen vastaavasti kuin
 Geminin. Tämän ansiosta mallia ei tarvitse itse laittaa ajoon, jolloin laskutus
-olisi tuntipohjainen vaan laskutus tapahtuu käytettyjen tokenien mukaan.
+olisi tuntipohjainen, vaan laskutus tapahtuu käytettyjen tokenien mukaan.
 \parencite{vertexAiModelGardenLlama3}
 
 Vertex AI:n SDK tukee valmiiksi useita eri malleja, myös muita kuin Geminin
@@ -322,8 +322,8 @@ ilmoitetut hinnat ja tarjoajat näkyvät taulukossa
 kolmansille osapuolille ovat taulukossa \ref{tab:third-party-llama-prices-2}.
 Kolmansia osapuolia ovat AWS, Azure, Databricks, Fireworks.ai, IBM, Octo.ai,
 Snowflake ja Togerher.AI. \parencite{llama} Taulukko ei kata kuin vain osan
-mahdollisista kolmannen osapuolen palveluntarjoajista sillä muun muassa
-Vertex AI:n kautta on saatavilla myös rajapinta Llama 3.1:lle
+mahdollisista kolmannen osapuolen palveluntarjoajista, sillä muun muassa
+Vertex AI:n kautta on saatavilla myös API Llama 3.1:lle
 \parencite{vertexAiModelGardenLlama3}.
 
 \begin{table}[H]
@@ -360,17 +360,17 @@ Vertex AI:n kautta on saatavilla myös rajapinta Llama 3.1:lle
 
 Tekoälyn turvallisuuteen ja tutkimukseen keskittyvä yritys, Anthropic, on
 luonut oman tekoälynsä, Clauden. Claude on pyritty rakentamaan
-tietoturvalliseksi, luotettavaksi ja varmaksi. \parencite{anthropicCompany}
-\parencite{anthropicClaude} Näihin on pyritty esimerkiksi tutkimuksien avulla,
-jotka ovat keskittyneet muun muassa suojauksen murtamisen (jailbreaking)
-estämiseen. \parencite{anthropicResearch}
+tietoturvalliseksi, luotettavaksi ja varmaksi. Näihin on pyritty esimerkiksi
+tutkimuksien avulla, jotka ovat keskittyneet muun muassa suojauksen murtamisen
+(jailbreaking) estämiseen. \parencite{anthropicCompany}
+\parencite{anthropicClaude} \parencite{anthropicResearch}
 
-Nykyisin Claudesta on kolme eri mallia versiolla 3.0. Näitä malleja ovat
-Sonnet, Opus ja Haiku. Pääasiallisesti Opus on isoin ja paras malli kun Haiku
-puolestaan keskittyy nopeuteen ja on huomattavasti pienempi. Sonnet puolestaan
-jää näiden kahden välimaastoon. Sonnetista on kuitenkin julkaistu uudempi
-versio 3.5, joka on saatu Opus:ta paremmaksi kuitenkin pitäen kulut samana kuin
-3.0 versiossa. Tilannetta on havainnollistettu kuvassa
+Vuoden 2024 loppupuolella Claudesta on kolme eri mallia versiolla 3.0. Näitä
+malleja ovat Sonnet, Opus ja Haiku. Pääasiallisesti Opus on isoin ja paras
+malli, kun Haiku puolestaan keskittyy nopeuteen ja on huomattavasti pienempi.
+Sonnet puolestaan jää näiden kahden välimaastoon. Sonnetista on kuitenkin
+julkaistu uudempi versio 3.5, joka on saatu Opusta paremmaksi kuitenkin pitäen
+kulut samana kuin 3.0 versiossa. Tilannetta on havainnollistettu kuvassa
 \ref{fig:3-5-sonnet-curve}. \parencite{anthropicAPIDocsModels}
 
 \begin{figure}[H]
@@ -390,8 +390,8 @@ Vertex AI:n kautta. \parencite{anthropicAPIDocs}
 \label{ch:claude-usage}
 
 Anthropic tarjoaa vain Python-kirjastoja Clauden käyttöön, joten sovellukseen
-integrointi tehdään kutsuen suoraan saatavilla olevaa rajapintaa. Yksi
-yksinkertainen vaihtoehto on käyttää openfeign:iä, joka saadaan käyttöön
+integrointi tehdään kutsuen suoraan saatavilla olevaa APIa. Yksi
+yksinkertainen vaihtoehto on käyttää OpenFeign-kirjastoa, joka saadaan käyttöön
 lisäämällä `pom.xml`:n riippuvuuksiin \ref{lst:openfeign-pom.xml} mukainen
 riippuvuus.
 
@@ -416,7 +416,7 @@ käyttämisen vaatii \parencite{anthropicAPIDocsVersions}
 
 \begin{lstlisting}[
     basicstyle=\small,
-    caption={Konfiguraation Claude:lle luodulle Openfeign clientille},
+    caption={Konfiguraation Claudelle luodulle Openfeign asiakkaalle},
     label={lst:ClaudeConfig.java},
     language=java,
 ]
@@ -438,17 +438,17 @@ public class ClaudeConfig {
 }
 \end{lstlisting}
 
-Tämän jälkeen määritellään interface, josta OpenFeign luo käytettävän clientin.
-Kyseinen interface on nähtävissä kohdassa \ref{lst:ClaudeApiClient.java}.
+Tämän jälkeen määritellään rajapinta, josta OpenFeign luo käytettävän asiakkaan.
+Kyseinen rajapinta on nähtävissä kohdassa \ref{lst:ClaudeApiClient.java}.
 
 \begin{lstlisting}[
     basicstyle=\small,
-    caption={Konfiguraation Claude:lle luodulle Openfeign clientille},
+    caption={Konfiguraation Claudelle luodulle Openfeign asiakkaalle},
     label={lst:ClaudeApiClient.java},
     language=java,
 ]
-// Kerrotaan OpenFeign:lle, että tämän interfacen perusteella tulee
-// luoda toteutus Claude rajapinnalle
+// Kerrotaan OpenFeign:lle, että tämän rajapinnan perusteella tulee
+// luoda toteutus Claude API:lle
 @FeignClient(
     name = "claude-api",
     url = "https://api.anthropic.com/v1/",
@@ -463,12 +463,12 @@ public interface ClaudeApiClient {
 }
 \end{lstlisting}
 
-OpenFeign luo määritellyn interfacen pohjalta automaattisesti ilmiintymän, jota
+OpenFeign luo määritellyn rajapinnan pohjalta automaattisesti ilmiintymän, jota
 voidaan käyttää kohdan \ref{lst:ClaudeService.java} mukaisesti.
 
 \begin{lstlisting}[
     basicstyle=\small,
-    caption={Konfiguraation Claude:lle luodulle Openfeign clientille},
+    caption={Konfiguraation Claudelle luodulle Openfeign asiakkaalle},
     label={lst:ClaudeService.java},
     language=java,
 ]
@@ -497,7 +497,7 @@ public class ClaudeService {
 Clauden hinnoittelu vaihtelee hiukan sivuston mukaan. Claude.ai:n Pro-tilauksen
 hinnoiksi ilmoitetaan \$20 tai 18€ + ALV ja Team-tilaukselle \$25/\$30 tai
 23€/28€ + ALV. \parencite{anthropicPricing} \parencite{claudePricing} Anthropic
-API:n hinnat on esitetty taulukossa \ref{tab:anthropic-api-pricing}
+APIn hinnat on esitetty taulukossa \ref{tab:anthropic-api-pricing}
 
 \begin{table}[H]
   \centering
@@ -519,9 +519,9 @@ web-käyttöliittymän sekä sovellusten kautta. Pro-tilaus lisää mahdollisuud
 käyttää Opus- ja Haiku-malleja sekä joitain QoL-lisäyksiä ja suurempaa
 prioriteettia käyttäjälle. Team-tilaus on lähinnä tiimin hallinnan ja maksun
 kannalta oleellisia lisätoiminnallisuuksia. Pro-tilaus lisää viisinkertaisen
-käyttörajan verrattuna ilmaiseen ja Team-tilaus sitäkin suuremman.
-\parencite{anthropicPricing} \parencite{claudePricing} Selviä käyttörajoja ei
-ole saatavilla.
+käyttörajan verrattuna ilmaiseen ja Team-tilaus sitäkin suuremman. Selviä
+käyttörajoja ei ole saatavilla. \parencite{anthropicPricing}
+\parencite{claudePricing}
 
 \section{xAI}
 
@@ -533,12 +533,12 @@ taustalla vaikuttaa olevan ennemminkin huumoriset päähänpistokset
 muun muassa OpenAI:n kanssa, jonka perustajistoon Elon Musk kuuluu
 \parencite{fireshipElonsLawsuitAgainstOpenAI}.
 
-Marraskuussa 2024 Grok-kielimallille avattiin rajapinta, jota kehittäjät
-pääsevät kokeilemaan vähintään vuoden 2024 loppuun asti. Jokaiselle
-rekisteröityneelle annetaan ilmaista kredittiä 25 dollarin verran
-kuukaudessa. Rajapinta on toteuttu yhteensopivaksi OpenAI:n ja Anthropicin
-tarjoamien rajapintojen kanssa, joka mahdollistaa jo tehtyjen toteutuksien
-erittäin helpon vaihtamisen käyttämään xAI:n rajapintaa. \parencite{xAIBlogApi}
+Marraskuussa 2024 Grok-kielimallille avattiin API, jota kehittäjät pääsevät
+kokeilemaan vähintään vuoden 2024 loppuun asti. Jokaiselle rekisteröityneelle
+annetaan ilmaista kredittiä 25 dollarin verran kuukaudessa. API on toteuttu
+yhteensopivaksi OpenAI:n ja Anthropicin tarjoamien APIen kanssa, joka
+mahdollistaa jo tehtyjen toteutuksien erittäin helpon vaihtamisen käyttämään
+xAI:n APIa. \parencite{xAIBlogApi}
 
 \subsection{Käyttö}
 
@@ -546,7 +546,7 @@ Dokumentaatiossa luetellut integraatiot pohjautuvat olemassa oleviin OpenAI:n
 ja Anthropic SDK:hin, jotka on toteutettu JavaScriptille ja Pythonille
 \parencite{xAIDocsIntegrations}. Näiden käyttö ei tällöin onnistu suoraan
 työn ohella tehdyn sovelluksen kanssa, joten toteutus tulee tehdä tarjolla
-olevan REST-rajapinnan kautta, kuten luvussa \ref{ch:claude-usage} tehtiin
+olevan REST-rajapinnan kautta, kuten kohdassa \ref{ch:claude-usage} tehtiin
 Clauden kanssa.
 
 Saamme API-avaimen määriteltyä dokumentaation mukaisesti otsikkotietoihin
@@ -554,7 +554,7 @@ kohdassa \ref{lst:XAIConfig.java} esitellyllä tavalla.
 
 \begin{lstlisting}[
     basicstyle=\small,
-    caption={Konfiguraation xAI:lle luodulle Openfeign clientille},
+    caption={Konfiguraation xAI:lle luodulle Openfeign asiakkaalle},
     label={lst:XAIConfig.java},
     language=java,
 ]
@@ -573,17 +573,18 @@ public class XAIConfig {
 }
 \end{lstlisting}
 
-Tämän jälkeen määritellään interface, josta OpenFeign luo käytettävän clientin.
-Kyseinen interface on nähtävissä kohdassa \ref{lst:XAIApiClient.java}.
+Tämän jälkeen määritellään rajapinta, josta OpenFeign luo käytettävän
+asiakkaan. Kyseinen rajapinta on nähtävissä kohdassa
+\ref{lst:XAIApiClient.java}.
 
 \begin{lstlisting}[
     basicstyle=\small,
-    caption={Interface xAI:n rajapinnasta},
+    caption={Rajapinta xAI:n API:sta},
     label={lst:XAIApiClient.java},
     language=java,
 ]
-// Kerrotaan OpenFeign:lle, että tämän interfacen perusteella tulee
-// luoda toteutus xAI rajapinnasta
+// Kerrotaan OpenFeign:lle, että tämän rajapinnan perusteella tulee
+// luoda toteutus xAI API:sta
 @FeignClient(
     name = "xai-api",
     url = "https://api.x.ai/v1/",
@@ -600,7 +601,7 @@ public interface XAIApiClient {
 }
 \end{lstlisting}
 
-OpenFeign luo määritellyn interfacen pohjalta automaattisesti ilmiintymän, jota
+OpenFeign luo määritellyn rajapinnan pohjalta automaattisesti ilmiintymän, jota
 voidaan käyttää kohdan \ref{lst:XAIService.java} mukaisesti.
 
 \begin{lstlisting}[
@@ -628,7 +629,7 @@ public class GrokService {
         ChatCompletionsRequest request =
             new ChatCompletionsRequest("grok-beta", messages);
 
-        // Kutsutaan rajapintaa luodulla pyynnöllä
+        // Kutsutaan APIn päätepistettä luodulla pyynnöllä
         ChatCompletionsResponse response =
             grokApiClient.chatCompletions(request);
 

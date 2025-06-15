@@ -46,7 +46,7 @@ muistin varassa.
 
 Tämän työn ohessa on luotu sovellus, joka pyrkii helpottamaan edellä kuvattuun
 tilanteeseen ja keventämään erityisten isosten työkuormaa, mutta samalla myös
-ohjaajien. Tulevaisuudeen on mietitty myös mahdollisuutta luoda mahdollisuus
+ohjaajien. Tulevaisuuteen on mietitty myös mahdollisuutta luoda mahdollisuus
 leiriläisille sekä huoltajille nähdä leiriin liittyviä asioita sovelluksesta.
 Toistaiseksi sovellus on kuitenkin vain ohjaajien ja isosten käytössä.
 
@@ -148,7 +148,7 @@ kyseinen toiminnallisuus taustajärjestelmän puolelle.
 Työkalun lähtökohtana ollut päästä testaamaan useampaa eri kielimallia, joten
 toteutuksesta on pyritty tekemään mahdollisimman joustava useammalla eri
 kielimallille. Jokaisen kielimallin toteutuksen tulee toteuttaa
-\ref{lst:StoryLineService.java} interfacen kaikki metodit, jotta kielimallia
+\ref{lst:StoryLineService.java}-rajapinnan kaikki metodit, jotta kielimallia
 saadaan käytettyä olemassa olevan käyttöliittymän kanssa. Metodit heittävät
 poikkeuksen, mikäli suoritus ei onnistunut, jolloin käyttöliittymä näyttää
 virheen ja mahdollistaa uudelleen yrittämisen.
@@ -156,7 +156,7 @@ virheen ja mahdollistaa uudelleen yrittämisen.
 \clearpage
 \begin{lstlisting}[
     basicstyle=\small,
-    caption={StoryLineService interface, jonka toteuttamalla kielimallit saadaan },
+    caption={StoryLineService-rajapinta, jonka toteuttamalla kielimallit saadaan },
     label={lst:StoryLineService.java},
     language=java,
 ]
@@ -171,7 +171,7 @@ public interface StoryLineService {
 \subsection{Gemini}
 
 Aiemmin kohdassa \ref{lst:GeminiServiceExample.java} esitelty GeminiService
-saadaan käyttöön toteuttamalla StorylineService-interfacessa määritellyt
+saadaan käyttöön toteuttamalla StorylineService-rajapinnassa määritellyt
 metodit tarinan luomiselle ja jatkamiselle esimerkin
 \ref{lst:GeminiService.java} mukaisesti. Geminin kanssa on mahdollista käyttää
 ChatSessionia, joka mahdollistaa viestien lähettämisen edestakaisin niin, että
@@ -181,7 +181,7 @@ käytettävissä.
 
 \begin{lstlisting}[
     basicstyle=\small,
-    caption={Esimerkki GeminiServicen StorylineService-interfacen vaatimien metodien toteutuksesta},
+    caption={Esimerkki GeminiServicen StorylineService-rajapinnan vaatimien metodien toteutuksesta},
     label={lst:GeminiService.java},
     language=java,
 ]
@@ -257,9 +257,9 @@ private Content createInitializeContent(Story story) {
 \end{lstlisting}
 
 Gemini osaa tuottaa sanallisen ohjeistuksen mukaisesti vastauksen suoraan JSON-
-muodossa, jolloin se pystytään parsimaan ilman, että vastausta tarvitsee
-käsitellä sen enempää. Vastauksen parsiminen saadaan siis toteutettu hyvinkin
-yksinkertaisesti esimerkin \ref{lst:GeminiService.java::parseResponse}
+muodossa, jolloin se pystytään jäsentämään ilman, että vastausta tarvitsee
+käsitellä sen enempää. Vastauksen jäsentäminen saadaan siis toteutettua
+hyvinkin yksinkertaisesti esimerkin \ref{lst:GeminiService.java::parseResponse}
 mukaisesti.
 
 \begin{lstlisting}[
@@ -277,7 +277,7 @@ private List<StoryLine> parseResponse(GenerateContentResponse response)
         .getParts(0)
         .getText();
 
-    // Parsitaan luettu json-teksti listaksi StoryLine-ilmiintymiä
+    // Jäsennetään luettu json-teksti listaksi StoryLine-ilmiintymiä
     return objectMapper.readValue(text, new TypeReference<>() {});
 }
 \end{lstlisting}
@@ -290,14 +290,14 @@ toiminnallisuudella.
 \subsection{PaLM2}
 
 Vastaavasti \ref{lst:PaLM2Service.java} kohdassa esitelty PaLM2Service saadaan
-toteuttamaan StorylineService-interface esimerkin
+toteuttamaan StorylineService-rajapinnan esimerkin
 \ref{lst:PaLM2Service.java::createStoryLines} mukaisesti. PaLM 2:lle ei ole
 tarjolla vastaavaa ChatSessionia, kuin Geminille, joten on sille toteutettu
 vain tarinan luonti, muttei mahdollisuutta jatkaa tarinaa.
 
 \begin{lstlisting}[
     basicstyle=\small,
-    caption={Esimerkki PaLM2Servicen StorylineService-interfacen metodien toteutuksesta},
+    caption={Esimerkki PaLM2Servicen StorylineService-rajapinnan metodien toteutuksesta},
     label={lst:PaLM2Service.java::createStoryLines},
     language=java,
 ]
@@ -350,8 +350,8 @@ private com.google.protobuf.Value getPrompt(String prompt) throws
 PaLM2:sta ohjeistaessa sanallisesti, että tuloksen tulee olla JSON-muodossa,
 tulee tuloste Markdownin tukemassa JSON-muodossa, jossa varsinanen JSON osuus
 on ympäritöity JSON-koodiosiota tarkoittavilla merkinnöillä. Jotta tulos
-saadaan käsitelty, tulee vastauksesta saada nämä pois. Tämä saadaan toteutettua
-esimerkin \ref{lst:PaLM2Service.java::parseResponse} mukaisesti.
+saadaan käsiteltyä, tulee vastauksesta saada nämä pois. Tämä saadaan
+toteutettua esimerkin \ref{lst:PaLM2Service.java::parseResponse} mukaisesti.
 
 \begin{lstlisting}[
     basicstyle=\small,
@@ -411,8 +411,8 @@ näkyvän virheviestin ettei ainakaan kyseinen formatointi ole käytössä.
 }
 \end{lstlisting}
 
-Vaikkei rajapinta suoraan vaikuta tukevan vastauksen muotoilua, voidaan ohjeet
-muotoiluun antaa kirjallisesti. Alustamalla keskustelu system-roolilta
+Vaikkei APIn päätepiste suoraan vaikuta tukevan vastauksen muotoilua, voidaan
+ohjeet muotoiluun antaa kirjallisesti. Alustamalla keskustelu system-roolilta
 tulevalla viestillä:
 
 \begin{quotation}
@@ -427,13 +427,13 @@ tulevalla viestillä:
 \end{quotation}
 
 saadaan vastaukset halutussa JSON-muodossa, jonka myötä saadaan viesti
-parsittua StoryLineService-interfacen metodien vastauksien haluamaan
-muotoon antamalla vastaus suoraan JSON-parserille kohdan
+jäsennettyä StoryLineService-rajapinnan metodien vastauksien haluamaan
+muotoon antamalla vastaus suoraan JSON-jäsentäjälle kohdan
 \ref{lst:XAIService.java::parseResponse} mukaisesti.
 
 \begin{lstlisting}[
     basicstyle=\small,
-    caption={XAI rajapinnan palauttaman vastauksen parsiminen haluttuun muotoon},
+    caption={XAI rajapinnan palauttaman vastauksen jäsentäminen haluttuun muotoon},
     label={lst:XAIService.java::parseResponse},
     language=java,
 ]
@@ -459,7 +459,7 @@ olevassa toteutuksessa on tehty.
 
 \begin{lstlisting}[
     basicstyle=\small,
-    caption={XAI rajapinnan palauttaman vastauksen parsiminen haluttuun muotoon},
+    caption={XAI rajapinnan palauttaman vastauksen jäsentäminen haluttuun muotoon},
     label={lst:XAIService.java::continueStoryLines},
     language=java,
 ]
@@ -475,7 +475,7 @@ public List<StoryLine> continueStoryLines(Story story) {
     messages.add(new Message("user", "Jatka tarinaa"));
 
     // tehdään pyyntö
-    // parsitaan vastaus
+    // jäsennetään vastaus
     // palautetaan uudet rivit
 }
 \end{lstlisting}
@@ -629,13 +629,13 @@ Testien tuloksien pohjalta Llama3 vaikutti suorituvan tasaisen varmasti tarinan
 generoinnista, mutta Gemini puolestaan sai tuotettua enemmän tarinaa yhdellä
 kertaa. Testaamisen yhteydessä lisäksi Llama3 toimi erittäin hitaasti
 verrattuna Gemininiin. Tätä ei kuitenkaan varsinaisesti mitattu, vaan kyseessä
-on testin tekijän kokemus. Geminin toimintaa testattiin myös lähes vuosi
-aiemmin isosten toimesta sovelluksen julkaisuhetkellä. Tuolloin isoset eivät
-tuoneet esille läheskään yhtä isoa määrää virhetilanteita kuin mitä
-varsinaisessa testissä tuli. Tällöin kuitenkin lähinnä keskityttiin yleiseen
-mielipiteeseen ja isoimpiin puutteisiin sekä ohjelmistovirheisiin joita tuli
-esille sovelluksessa itsessään, eikä tuolta ajalta ole statistiikkaa, jota
-voisi verrata tuoreempiin mittauksiin.
+on testin tekijän kokemus. Isoset testasiva lähes vuosi sitten Geminin
+toimintaa sovelluksen julkaisuhetkellä. Tuolloin he eivät tuoneet esille
+läheskään yhtä isoa määrää virhetilanteita kuin mitä varsinaisessa testissä
+tuli. Tällöin kuitenkin lähinnä keskityttiin yleiseen mielipiteeseen ja
+isoimpiin puutteisiin sekä ohjelmistovirheisiin joita tuli esille sovelluksessa
+itsessään, eikä tuolta ajalta ole statistiikkaa, jota voisi verrata tuoreempiin
+mittauksiin.
 
 Mittaustulosten käsittelyhetkellä Geministä oli saatavilla huomattavasti
 uudempi ja kyvykkäämpi malli, joka olisi voinut olla mahdollisesti
